@@ -1,4 +1,4 @@
 export const routes = {
-    ROOT: '',
+    ROOT: '/',
     CALCULATOR: '/calculator',
 }
