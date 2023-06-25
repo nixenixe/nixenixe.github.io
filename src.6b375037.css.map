@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.less"],"names":[],"mappings":"AAKA,UAJE,WAAA,CACA,WAGF,KAGE","file":"src.6b375037.css","sourceRoot":"../src","sourcesContent":["html {\n  height: 100%;\n  width: 100%;\n}\n\nbody {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n}"]}
