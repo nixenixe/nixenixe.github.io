@@ -36805,7 +36805,7 @@ var Home = function Home() {
   };
   return /*#__PURE__*/React.createElement("div", {
     className: "page-setup welcome-page"
-  }, /*#__PURE__*/React.createElement("h1", null, "Welcome!!"), /*#__PURE__*/React.createElement(Spacer_1.Spacer, {
+  }, /*#__PURE__*/React.createElement("h1", null, "Welcome!"), /*#__PURE__*/React.createElement(Spacer_1.Spacer, {
     size: "m"
   }), getMenuItem('Calculator', routes_1.routes.CALCULATOR));
 };
@@ -47226,9 +47226,15 @@ var routes_1 = require("./routes");
 var home_1 = require("./scenes/home/home");
 var calculator_1 = require("./scenes/calculator/calculator");
 require("./styling/index.less");
-var router = (0, react_router_dom_1.createBrowserRouter)([{
-  path: "*",
-  Component: Root
+var router = (0, react_router_dom_1.createHashRouter)([{
+  path: routes_1.routes.CALCULATOR,
+  element: /*#__PURE__*/React.createElement(calculator_1.Calculator, null)
+}, {
+  path: routes_1.routes.ROOT,
+  element: /*#__PURE__*/React.createElement(home_1.Home, null)
+}, {
+  path: "/*",
+  element: /*#__PURE__*/React.createElement(home_1.Home, null)
 }]);
 var container = document.getElementById('app');
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -47236,20 +47242,6 @@ var root = (0, client_1.createRoot)(container);
 root.render( /*#__PURE__*/React.createElement(React.StrictMode, null, /*#__PURE__*/React.createElement(react_router_dom_1.RouterProvider, {
   router: router
 })));
-function Root() {
-  return /*#__PURE__*/React.createElement(react_router_dom_1.Routes, null, /*#__PURE__*/React.createElement(react_router_dom_1.Route, {
-    path: routes_1.routes.CALCULATOR,
-    element: /*#__PURE__*/React.createElement(calculator_1.Calculator, null)
-  }), /*#__PURE__*/React.createElement(react_router_dom_1.Route, {
-    path: routes_1.routes.ROOT,
-    element: /*#__PURE__*/React.createElement(home_1.Home, null)
-  }), /*#__PURE__*/React.createElement(react_router_dom_1.Route, {
-    path: "*",
-    element: /*#__PURE__*/React.createElement(react_router_dom_1.Navigate, {
-      to: routes_1.routes.ROOT
-    })
-  }));
-}
 },{"react":"../node_modules/react/index.js","react-dom/client":"../node_modules/react-dom/client.js","react-router-dom":"../node_modules/react-router-dom/dist/index.js","./routes":"routes.ts","./scenes/home/home":"scenes/home/home.tsx","./scenes/calculator/calculator":"scenes/calculator/calculator.tsx","./styling/index.less":"styling/index.less"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -47275,7 +47267,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51355" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54162" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
