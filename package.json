@@ -1,5 +1,5 @@
 {
-  "homepage": "https://nixenixe.github.io/",
+  "homepage": "https://nixenixe.github.io/home",
   "files": [
     "src/"
   ],
@@ -31,6 +31,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.9.0",
-    "react-router-dom": "^6.11.2"
+    "react-router-dom": "^6.14.0"
   }
 }

@@ -1,18 +1,15 @@
 import * as React from 'react';
 import {createRoot} from 'react-dom/client';
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, RouterProvider, Routes, Route, Navigate} from "react-router-dom";
 import {routes} from "./routes";
 import {Home} from "./scenes/home/home";
 import {Calculator} from "./scenes/calculator/calculator";
+import "./styling/index.less";
 
 const router = createBrowserRouter([
     {
-        path: routes.ROOT,
-        element: <Home/>,
-    },
-    {
-        path: routes.CALCULATOR,
-        element: <Calculator/>
+        path: "*",
+        Component: Root,
     }
 ]);
 
@@ -24,3 +21,13 @@ root.render(
         <RouterProvider router={router}/>
     </React.StrictMode>
 );
+
+function Root() {
+    return (
+        <Routes>
+            <Route path={routes.CALCULATOR} element={<Calculator />} />
+            <Route path={routes.ROOT} element={<Home />} />
+            <Route path={"*"} element={<Navigate to={routes.ROOT} />} />
+        </Routes>
+    )
+}
