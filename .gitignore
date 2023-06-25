@@ -2,5 +2,4 @@
 .idea
 yarn-error.log
 /.parcel-cache
-/dist
 /.cache
