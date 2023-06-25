@@ -15,7 +15,7 @@ export const Home = () => {
     }
     return (
         <div className="page-setup welcome-page">
-            <h1>Welcome!</h1>
+            <h1>Welcome!!</h1>
             <Spacer size="m"/>
             {getMenuItem('Calculator', routes.CALCULATOR)}
         </div>
