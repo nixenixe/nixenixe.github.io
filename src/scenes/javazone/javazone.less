@@ -1,0 +1,49 @@
+@import "../../styling/definitions";
+
+.lecture-box {
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: white;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    .time, .room {
+      font-size: 12px;
+    }
+  }
+}
+
+.calendar-view {
+  display: flex;
+  background-color: @ultralight-pastel-green;
+  border-radius: 6px;
+  padding: 20px;
+  height: 100%;
+
+  .calendar-box {
+    flex: 1;
+  }
+}
+
+.button-container {
+  display: flex;
+
+  .button-selected {
+    background-color: @darker-pastel-green;
+  }
+}
+
+.lecture-boxes-in-card {
+  display: flex;
+
+  > div {
+    flex: 1;
+  }
+}

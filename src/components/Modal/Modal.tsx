@@ -10,7 +10,6 @@ interface ModalProps {
 }
 
 export const Modal = (props: ModalProps) => {
-    console.log(props.open);
     return (
         <div className={`modal${props.open ? ' modal-open' : ''}`}>
            <div className="modal-content">

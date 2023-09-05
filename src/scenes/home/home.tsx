@@ -20,6 +20,8 @@ export const Home = () => {
             <h1>Welcome!</h1>
             <Spacer size="m"/>
             {getMenuItem('Calculator', views.CALCULATOR)}
+            <Spacer size="m"/>
+            {getMenuItem('Calendar', views.CALENDAR)}
         </div>
     );
 };
