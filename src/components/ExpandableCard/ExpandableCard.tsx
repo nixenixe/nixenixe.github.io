@@ -6,20 +6,20 @@ import cx from 'classnames';
 
 interface ExpandableCardProps {
     label: string;
-    content: JSX.Element;
-    color?: 'WHITE' | 'GREEN';
+    content: JSX.Element | string;
+    color?: 'WHITE' | 'YELLOW';
 }
 
 export const ExpandableCard = (props: ExpandableCardProps) => {
     const [open, setOpen] = React.useState<boolean>(false);
-    const colorSelected = props.color ?? 'WHITE';
+    const colorSelected = props.color ?? 'YELLOW';
 
     const classnames = cx({
         'expandable-card': true,
         'expandable-card-open': open,
         'expandable-card-closed': !open,
         'expandable-card-white': colorSelected === 'WHITE',
-        'expandable-card-green': colorSelected === 'GREEN',
+        'expandable-card-yellow': colorSelected === 'YELLOW',
     });
 
     return (

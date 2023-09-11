@@ -16,7 +16,7 @@ export const JavaZoneCalendar = () => {
     const [lectures, setLectures] = useState<FetchResponse<LectureResponse> | null>(null);
     const [events, setEvents] = useState<Event[]>([]);
     const [favorites, setFavorites] = useState<string[]>([]);
-    const [view, setView] = useState<'ALL' | 'FAV'>('FAV');
+    const [filterView, setFilterView] = useState<'ALL' | 'FAV'>('FAV');
     const localizer = momentLocalizer(moment);
 
     const lecturesToEvents = (lectures: Lecture[]) => {
@@ -43,14 +43,14 @@ export const JavaZoneCalendar = () => {
 
     useEffect(() => {
         if (lectures !== null && lectures !== 'ERROR') {
-            if (view === 'ALL') {
+            if (filterView === 'ALL') {
                 setEvents(lecturesToEvents(lectures.sessions));
             } else {
                 const justFav = lectures.sessions.filter((l) => favorites.includes(l.id));
                 setEvents(lecturesToEvents(justFav));
             }
         }
-    }, [lectures, view, favorites]);
+    }, [lectures, filterView, favorites]);
 
     if (lectures === null) {
         return <Spinner />;
@@ -105,20 +105,19 @@ export const JavaZoneCalendar = () => {
 
     return (
         <>
-            <h1>Calendar</h1>
+            <h1>JavaZone calendar</h1>
             <Spacer size="m" />
             <ExpandableCard
                 label="Lectures"
                 content={getLectureList(lectures.sessions)}
-                color="GREEN"
             />
             <Spacer size="l" />
             <div className="button-container">
-                <Button onClick={() => setView('ALL')} className={view === 'ALL' ? 'button-selected' : ''}>
+                <Button onClick={() => setFilterView('ALL')} className={filterView === 'ALL' ? 'button-selected' : ''}>
                     All
                 </Button>
                 <Spacer size="m" />
-                <Button onClick={() => setView('FAV')} className={view === 'FAV' ? 'button-selected' : ''}>
+                <Button onClick={() => setFilterView('FAV')} className={filterView === 'FAV' ? 'button-selected' : ''}>
                     Favorites
                 </Button>
             </div>

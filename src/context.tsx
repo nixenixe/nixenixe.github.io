@@ -1,6 +1,6 @@
 import {createContext, Dispatch, SetStateAction} from "react";
 
-export type ViewType = 'HOME' | 'CALCULATOR' | 'CALENDAR';
+export type ViewType = 'HOME' | 'CALCULATOR' | 'JAVAZONE';
 
 export interface ViewList {
     [key: string]: ViewType;
@@ -14,7 +14,7 @@ export interface AppContext {
 export const views: ViewList = {
     HOME: "HOME",
     CALCULATOR: "CALCULATOR",
-    CALENDAR: "CALENDAR",
+    JAVAZONE: "JAVAZONE",
 };
 
 export const context = createContext<AppContext>({

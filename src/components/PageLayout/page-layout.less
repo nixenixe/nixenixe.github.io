@@ -2,7 +2,99 @@
 
 
 .page-layout {
+  display: flex;
   width: 100%;
   height: 100%;
-  padding: 20px;
+
+  .page-layout-content {
+    flex: 1;
+    padding: 40px;
+  }
+}
+
+.menu-container {
+  width: 250px;
+  padding: 40px 0;
+  background-color: @primary-green;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .menu-logo {
+    display: flex;
+    margin-bottom: 40px;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .menu-item {
+    width: 100%;
+    font-size: 18px;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .menu-item:hover {
+    background-color: @dark-green;
+  }
+
+  .menu-item.menu-item-selected {
+    background-color: @dark-green;
+    font-weight: 700;
+  }
+}
+
+.mobile-menu-component {
+  display: none;
+}
+
+@media @mobile {
+  .page-layout {
+    flex-direction: column;
+  }
+
+  .menu-container {
+    display: none;
+  }
+
+  .mobile-menu-component {
+    display: flex;
+    width: 100%;
+    background-color: @primary-green;
+    flex-direction: column;
+
+    .mobile-menu-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 20px;
+
+      .mobile-menu-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+    }
+
+    .mobile-menu-open {
+      display: flex;
+      flex-direction: column;
+      margin-top: 10px;
+
+      .mobile-menu-item {
+        display: flex;
+        align-items: center;
+        padding: 5px 30px;
+        gap: 10px;
+      }
+
+      .mobile-menu-item-selected {
+        background-color: @dark-green;
+      }
+    }
+  }
 }
