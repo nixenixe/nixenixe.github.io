@@ -13,7 +13,7 @@ export const App = () => {
         <AppContextProvider value={{view, setView}}>
             <ViewRouter />
         </AppContextProvider>
-    )
+    );
 };
 
 export const ViewRouter = () => {

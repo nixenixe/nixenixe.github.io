@@ -17,7 +17,7 @@ export const Calculator = () => {
                 title={'New expense'}
                 children={<NewExpense />}
             />
-            <h1>Split the bill</h1>
+            <h1>Split the bill! Hei Maria!</h1>
             <Spacer size="m" />
             <AddButton label="Add expense" onClick={() => setOpenModal(true)} />
         </div>
