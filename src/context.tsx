@@ -1,6 +1,9 @@
 import {createContext, Dispatch, SetStateAction} from "react";
 
-export type ViewType = 'HOME' | 'CALCULATOR' | 'JAVAZONE';
+export type ViewType = 'HOME' |
+    'CALCULATOR' |
+    'JAVAZONE' |
+    'TODO';
 
 export interface ViewList {
     [key: string]: ViewType;

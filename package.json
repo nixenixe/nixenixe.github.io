@@ -25,6 +25,7 @@
     "@types/react-big-calendar": "^1.6.4",
     "@types/react-dom": "^18.2.4",
     "@types/react-select": "^5.0.1",
+    "@types/uuid": "^9.0.7",
     "classnames": "^2.3.2",
     "gh-pages": "^5.0.0",
     "moment": "^2.29.4",
@@ -33,6 +34,7 @@
     "react-big-calendar": "^1.8.2",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
-    "react-select": "^5.7.4"
+    "react-select": "^5.7.4",
+    "uuid": "^9.0.1"
   }
 }

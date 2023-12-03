@@ -8,12 +8,12 @@
 
   .page-layout-content {
     flex: 1;
-    padding: 40px;
+    padding: 20px;
   }
 }
 
 .menu-container {
-  width: 250px;
+  // width: 250px;
   padding: 40px 0;
   background-color: @primary-green;
   display: flex;
@@ -29,22 +29,35 @@
 
   .menu-item {
     width: 100%;
-    font-size: 18px;
-    padding: 10px 20px;
+    padding: 10px 15px;
     cursor: pointer;
     text-align: left;
     display: flex;
     gap: 10px;
     align-items: center;
+    position: relative;
+
+    .title-tooltip {
+      display: none;
+    }
   }
 
   .menu-item:hover {
     background-color: @dark-green;
+
+    .title-tooltip {
+      position: absolute;
+      top: 4px;
+      left: 50px;
+      display: inline-block;
+      width: max-content;
+      background-color: @dark-green;
+      padding: 4px;
+    }
   }
 
   .menu-item.menu-item-selected {
     background-color: @dark-green;
-    font-weight: 700;
   }
 }
 

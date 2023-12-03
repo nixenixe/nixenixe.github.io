@@ -8,9 +8,9 @@
 }
 
 .button {
-  border-radius: 16px;
+  border-radius: 8px;
   padding: 10px 16px;
-  background-color: @primary-orange;
+  background-color: @dark-green;
   color: white;
   border: none;
   min-width: 80px;
@@ -20,6 +20,22 @@
   letter-spacing: 1.2px;
 }
 
-.button:hover, .button:active, .button:focus {
-  background-color: @dark-blue;
+.button:hover:not(:disabled),
+.button:active:not(:disabled),
+.button:focus:not(:disabled),
+.button:focus-visible:not(:disabled) {
+  background-color: @primary-green;
+  cursor: pointer;
+  outline: none;
+  transform: scale(1.05);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  transform: none;
+  background-color: #cbddc8;
+}
+
+.icon-button {
+  cursor: pointer;
 }

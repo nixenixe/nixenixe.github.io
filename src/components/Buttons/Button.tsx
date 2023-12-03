@@ -4,7 +4,7 @@ import cx from "classnames";
 import {ButtonHTMLAttributes} from "react";
 
 interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'> {
-    className: string;
+    className?: string;
 }
 
 export const Button = (props: ButtonProps) => {

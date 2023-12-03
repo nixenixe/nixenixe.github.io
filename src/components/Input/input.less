@@ -2,13 +2,31 @@
 
 input {
   outline: none;
-  border: 2px solid @dark-blue;
-  border-radius: 6px;
-  height: 40px;
+  border: none;
+  border-bottom: 2px solid @dark-green;
+  border-radius: 4px 4px 0 0;
+  height: 36px;
   padding: 15px;
   width: 100%;
+  background-color: @ultralight-green;
+}
+
+input[type=checkbox] {
+  height: 16px;
+  width: 16px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 input:hover, input:focus, input:active, input:focus-visible {
-  background-color: @ultralight-blue;
+  background-color: @light-green;
+  outline: none;
 }

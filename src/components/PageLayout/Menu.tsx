@@ -12,7 +12,6 @@ export const Menu = () => {
         <div className="menu-container">
             <div className="menu-logo">
                 <TbCat size="30px" />
-                <h2>Nixe.io</h2>
             </div>
             {menuItems.map((i) => {
                 return (
@@ -22,7 +21,7 @@ export const Menu = () => {
                         onClick={() => setView(i.view)}
                     >
                         {i.icon}
-                        {i.title}
+                        <div className="title-tooltip">{i.title}</div>
                     </div>
                 );
             })}
