@@ -22,7 +22,6 @@ export const TodoPage = () => {
     const [currentTime, setCurrentTime] = useState<string>('');
     const [endTime, setEndTime] = useState<string>('18');
     const [timeNow, setTimeNow] = useState<Moment>(moment().set('second', 0));
-    const [oneColumn, setOneColumn] = useState<boolean>(true);
 
     useEffect(() => {
         const savedTasksString = localStorage.getItem(tasksKey);
@@ -202,17 +201,6 @@ export const TodoPage = () => {
         }
     };
 
-    const getLists = (tasks: Task[]) => {
-        if (oneColumn) {
-            return [tasks, []];
-        } else {
-            const half = Math.ceil(tasks.length / 2);
-            const first = tasks.slice(0, half);
-            const second = tasks.slice(half);
-            return [first, second];
-        }
-    };
-
     return (
         <div className="todo-page">
             <div className="todo-info-box">
@@ -253,42 +241,21 @@ export const TodoPage = () => {
                 <Button onClick={addTask} disabled={!currentTask || !currentTime}>
                     Add
                 </Button>
-                <Spacer size="s" />
-                <Button
-                    className={`column-button ${oneColumn ? '' : 'column-button-selected'}`}
-                    onClick={() => setOneColumn((old) => !old)}
-                >
-                    <GoColumns size={16} />
-                </Button>
+
             </div>
             <Spacer size="m" />
-            <div className="tasks-list-container">
-                <div className={`tasks-list`}>
-                    {getLists(sortList(tasks))[0].map((t) => {
-                        return (
-                            <TaskBox
-                                task={t}
-                                onCheck={(task) => checkAsDone(task)}
-                                key={t.id}
-                                changeTaskValue={(newValues) => changeTaskValues(newValues)}
-                                deleteTask={(task) => deleteTask(task)}
-                            />
-                        );
-                    })}
-                </div>
-                {!oneColumn && <div className={`tasks-list`}>
-                    {getLists(sortList(tasks))[1].map((t) => {
-                        return (
-                            <TaskBox
-                                task={t}
-                                onCheck={(task) => checkAsDone(task)}
-                                key={t.id}
-                                changeTaskValue={(newValues) => changeTaskValues(newValues)}
-                                deleteTask={(task) => deleteTask(task)}
-                            />
-                        );
-                    })}
-                </div>}
+            <div className={`tasks-list`}>
+                {sortList(tasks).map((t) => {
+                    return (
+                        <TaskBox
+                            task={t}
+                            onCheck={(task) => checkAsDone(task)}
+                            key={t.id}
+                            changeTaskValue={(newValues) => changeTaskValues(newValues)}
+                            deleteTask={(task) => deleteTask(task)}
+                        />
+                    );
+                })}
             </div>
         </div>
     );

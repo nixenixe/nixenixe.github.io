@@ -1143,19 +1143,10 @@ button.rbc-input::-moz-focus-inner {
   }
 }
 
-.todo-page .tasks-list-container {
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-}
 .todo-page .tasks-list {
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
-  width: 100%;
-}
-.todo-page .tasks-list .task-container {
   width: 100%;
 }
 .todo-page .tasks-list.tasks-list-two-columns .task-container {
@@ -1207,10 +1198,11 @@ button.rbc-input::-moz-focus-inner {
   background-color: #D5EEBB;
   display: flex;
   justify-content: flex-start;
-  padding: 16px 20px;
+  padding: 16px 16px;
   align-items: center;
   border-radius: 6px;
   gap: 10px;
+  width: 400px;
 }
 .todo-page .task-container svg {
   cursor: pointer;
