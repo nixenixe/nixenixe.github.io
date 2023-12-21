@@ -60,6 +60,7 @@ export const TodoPage = () => {
         }
         setCurrentTask('');
         setCurrentTime('');
+        document.getElementById("task-description-id").focus();
     };
 
     const getStartTime = () => {
@@ -150,7 +151,7 @@ export const TodoPage = () => {
             } else if (a.done < b.done) {
                 return -1;
             }
-            return b.time - a.time;
+            return a.taskDescription.localeCompare(b.taskDescription);
         });
     };
 
@@ -221,6 +222,7 @@ export const TodoPage = () => {
                     value={currentTask}
                     placeholder="Task"
                     className="task-input"
+                    id="task-description-id"
                 />
                 <Input
                     type="number"
