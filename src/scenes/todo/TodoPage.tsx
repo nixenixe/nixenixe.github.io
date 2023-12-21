@@ -202,6 +202,17 @@ export const TodoPage = () => {
         }
     };
 
+    const getLists = (tasks: Task[]) => {
+        if (oneColumn) {
+            return [tasks, []];
+        } else {
+            const half = Math.ceil(tasks.length / 2);
+            const first = tasks.slice(0, half);
+            const second = tasks.slice(half);
+            return [first, second];
+        }
+    };
+
     return (
         <div className="todo-page">
             <div className="todo-info-box">
@@ -210,10 +221,10 @@ export const TodoPage = () => {
                 {getInfoWithLabel('Time left', getTimeLeft())}
                 {getInfoWithLabel('Surplus', getSurplus())}
                 {getInfoWithLabel('Start time', getStartTime())}
-                <EndTime endTime={endTime} setEndTime={saveEndTime}/>
-                <IconButton icon="delete" onClick={deleteAll}/>
+                <EndTime endTime={endTime} setEndTime={saveEndTime} />
+                <IconButton icon="delete" onClick={deleteAll} />
             </div>
-            <Spacer size="m"/>
+            <Spacer size="m" />
             <div className="todo-input-container">
                 <Input
                     onChange={(e) => {
@@ -238,31 +249,46 @@ export const TodoPage = () => {
                         }
                     }}
                 />
-                <Spacer size="s"/>
+                <Spacer size="s" />
                 <Button onClick={addTask} disabled={!currentTask || !currentTime}>
                     Add
                 </Button>
-                <Spacer size="s"/>
+                <Spacer size="s" />
                 <Button
                     className={`column-button ${oneColumn ? '' : 'column-button-selected'}`}
                     onClick={() => setOneColumn((old) => !old)}
                 >
-                    <GoColumns size={16}/>
+                    <GoColumns size={16} />
                 </Button>
             </div>
-            <Spacer size="s"/>
-            <div className={`tasks-list ${oneColumn ? '' : 'tasks-list-two-columns'}`}>
-                {sortList(tasks).map((t) => {
-                    return (
-                        <TaskBox
-                            task={t}
-                            onCheck={(task) => checkAsDone(task)}
-                            key={t.id}
-                            changeTaskValue={(newValues) => changeTaskValues(newValues)}
-                            deleteTask={(task) => deleteTask(task)}
-                        />
-                    );
-                })}
+            <Spacer size="m" />
+            <div className="tasks-list-container">
+                <div className={`tasks-list`}>
+                    {getLists(sortList(tasks))[0].map((t) => {
+                        return (
+                            <TaskBox
+                                task={t}
+                                onCheck={(task) => checkAsDone(task)}
+                                key={t.id}
+                                changeTaskValue={(newValues) => changeTaskValues(newValues)}
+                                deleteTask={(task) => deleteTask(task)}
+                            />
+                        );
+                    })}
+                </div>
+                {!oneColumn && <div className={`tasks-list`}>
+                    {getLists(sortList(tasks))[1].map((t) => {
+                        return (
+                            <TaskBox
+                                task={t}
+                                onCheck={(task) => checkAsDone(task)}
+                                key={t.id}
+                                changeTaskValue={(newValues) => changeTaskValues(newValues)}
+                                deleteTask={(task) => deleteTask(task)}
+                            />
+                        );
+                    })}
+                </div>}
             </div>
         </div>
     );

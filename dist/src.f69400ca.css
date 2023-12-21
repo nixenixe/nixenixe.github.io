@@ -1143,10 +1143,17 @@ button.rbc-input::-moz-focus-inner {
   }
 }
 
+.todo-page .tasks-list-container {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
 .todo-page .tasks-list {
   display: flex;
-  gap: 10px;
+  gap: 14px;
   flex-wrap: wrap;
+  width: 100%;
 }
 .todo-page .tasks-list .task-container {
   width: 100%;
@@ -1200,7 +1207,7 @@ button.rbc-input::-moz-focus-inner {
   background-color: #D5EEBB;
   display: flex;
   justify-content: flex-start;
-  padding: 8px 16px;
+  padding: 16px 20px;
   align-items: center;
   border-radius: 6px;
   gap: 10px;
