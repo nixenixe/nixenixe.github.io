@@ -11,8 +11,6 @@ import {TaskBox} from "./TaskBox";
 import {EndTime} from "./EndTime";
 import moment, {Moment} from "moment";
 import {formatDuration} from "./utils";
-import {GoColumns} from "react-icons/go";
-
 
 export const TodoPage = () => {
     const tasksKey = 'tasks';
@@ -22,6 +20,8 @@ export const TodoPage = () => {
     const [currentTime, setCurrentTime] = useState<string>('');
     const [endTime, setEndTime] = useState<string>('18');
     const [timeNow, setTimeNow] = useState<Moment>(moment().set('second', 0));
+
+    console.log(tasks);
 
     useEffect(() => {
         const savedTasksString = localStorage.getItem(tasksKey);
@@ -34,8 +34,6 @@ export const TodoPage = () => {
         if (savedEndTime) {
             setEndTime(savedEndTime);
         }
-        const interval = setInterval(() => setTimeNow((moment().set('second', 0))), 60000);
-        return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
@@ -59,7 +57,7 @@ export const TodoPage = () => {
         }
         setCurrentTask('');
         setCurrentTime('');
-        document.getElementById("task-description-id").focus();
+        document.getElementById("task-description-id")?.focus();
     };
 
     const getStartTime = () => {
@@ -122,25 +120,10 @@ export const TodoPage = () => {
 
     const changeTaskValues = (newValues: Task) => {
         setTasks((old) => {
-            const index = old.findIndex((t => t.id === newValues.id));
-            if (index >= 0) {
-                const newArray = [...old];
-                newArray.splice(index, 1);
-                return [...newArray, newValues];
-            } else {
-                return old;
-            }
+            const restOfArray = [...old].filter((t) => t.id !== newValues.id);
+            localStorage.setItem(tasksKey, JSON.stringify([...restOfArray, newValues]));
+            return [...restOfArray, newValues];
         });
-        const savedTasksString = localStorage.getItem(tasksKey);
-        if (savedTasksString) {
-            const savedTasks = JSON.parse(savedTasksString) as Task[];
-            const index = savedTasks.findIndex((t => t.id === newValues.id));
-            if (index >= 0) {
-                const newArray = [...savedTasks];
-                newArray.splice(index, 1);
-                localStorage.setItem(tasksKey, JSON.stringify([...newArray, newValues]));
-            }
-        }
     }
 
     const sortList = (list: Task[]) => {
@@ -180,25 +163,10 @@ export const TodoPage = () => {
 
     const deleteTask = (task: Task) => {
         setTasks((old) => {
-            const index = old.findIndex((t => t.id === task.id));
-            if (index >= 0) {
-                const newArray = [...old];
-                newArray.splice(index, 1);
-                return [...newArray];
-            } else {
-                return old;
-            }
+            const newArray = [...old].filter((t) => t.id !== task.id);
+            localStorage.setItem(tasksKey, JSON.stringify(newArray));
+            return newArray;
         });
-        const savedTasksString = localStorage.getItem(tasksKey);
-        if (savedTasksString) {
-            const savedTasks = JSON.parse(savedTasksString) as Task[];
-            const index = savedTasks.findIndex((t => t.id === t.id));
-            if (index >= 0) {
-                const newArray = [...savedTasks];
-                newArray.splice(index, 1);
-                localStorage.setItem(tasksKey, JSON.stringify([...newArray]));
-            }
-        }
     };
 
     return (
@@ -209,10 +177,10 @@ export const TodoPage = () => {
                 {getInfoWithLabel('Time left', getTimeLeft())}
                 {getInfoWithLabel('Surplus', getSurplus())}
                 {getInfoWithLabel('Start time', getStartTime())}
-                <EndTime endTime={endTime} setEndTime={saveEndTime} />
-                <IconButton icon="delete" onClick={deleteAll} />
+                <EndTime endTime={endTime} setEndTime={saveEndTime}/>
+                <IconButton icon="delete" onClick={deleteAll}/>
             </div>
-            <Spacer size="m" />
+            <Spacer size="m"/>
             <div className="todo-input-container">
                 <Input
                     onChange={(e) => {
@@ -237,20 +205,20 @@ export const TodoPage = () => {
                         }
                     }}
                 />
-                <Spacer size="s" />
+                <Spacer size="s"/>
                 <Button onClick={addTask} disabled={!currentTask || !currentTime}>
                     Add
                 </Button>
 
             </div>
-            <Spacer size="m" />
-            <div className={`tasks-list`}>
+            <Spacer size="m"/>
+            <div className="tasks-list">
                 {sortList(tasks).map((t) => {
                     return (
                         <TaskBox
+                            key={t.id}
                             task={t}
                             onCheck={(task) => checkAsDone(task)}
-                            key={t.id}
                             changeTaskValue={(newValues) => changeTaskValues(newValues)}
                             deleteTask={(task) => deleteTask(task)}
                         />

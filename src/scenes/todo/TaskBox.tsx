@@ -17,6 +17,8 @@ export const TaskBox = ({task, onCheck, changeTaskValue, deleteTask}: TaskBoxPro
 
     const onTaskBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         if (e.currentTarget.value !== '') {
+
+            console.log('1');
             const {taskDescription, ...rest} = task;
             const newValues: Task = {taskDescription: e.currentTarget.value, ...rest};
             changeTaskValue(newValues);
@@ -34,7 +36,7 @@ export const TaskBox = ({task, onCheck, changeTaskValue, deleteTask}: TaskBoxPro
     };
 
     return (
-        <div key={task.id} className={`task-container ${task.done ? 'task-container-done' : ''}`}>
+        <div className={`task-container ${task.done ? 'task-container-done' : ''}`}>
             <Input type="checkbox" defaultChecked={task.done} onClick={() => onCheck(task)}/>
             {!editTask &&
                 <p
@@ -73,5 +75,5 @@ export const TaskBox = ({task, onCheck, changeTaskValue, deleteTask}: TaskBoxPro
             <MdDelete onClick={() => deleteTask(task)}/>
         </div>
     );
-}
+};
 

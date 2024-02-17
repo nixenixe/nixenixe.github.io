@@ -3,9 +3,9 @@
 .todo-page {
   .tasks-list {
     display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
+    gap: 8px;
     width: 100%;
+    flex-direction: column;
   }
 
   .tasks-list.tasks-list-two-columns {
@@ -65,14 +65,13 @@
   }
 
   .task-container {
-    background-color: #D5EEBB;
+    border: 2px solid @primary-orange;
     display: flex;
     justify-content: flex-start;
-    padding: 16px 16px;
+    padding: 8px 16px;
     align-items: center;
     border-radius: 6px;
     gap: 10px;
-    width: 400px;
 
     svg {
       cursor: pointer;
