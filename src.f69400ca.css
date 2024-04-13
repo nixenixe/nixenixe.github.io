@@ -1058,6 +1058,7 @@ button.rbc-input::-moz-focus-inner {
 .page-layout .page-layout-content {
   flex: 1;
   padding: 20px;
+  overflow: auto;
 }
 .menu-container {
   padding: 40px 0;
@@ -1145,9 +1146,9 @@ button.rbc-input::-moz-focus-inner {
 
 .todo-page .tasks-list {
   display: flex;
-  gap: 8px;
+  gap: 15px;
   width: 100%;
-  flex-direction: column;
+  flex-wrap: wrap;
 }
 .todo-page .tasks-list.tasks-list-two-columns .task-container {
   width: 49%;
@@ -1195,22 +1196,28 @@ button.rbc-input::-moz-focus-inner {
   width: 100px;
 }
 .todo-page .task-container {
-  border: 2px solid #F4976C;
+  border: 1px solid lightgray;
   display: flex;
   justify-content: flex-start;
-  padding: 8px 16px;
+  padding: 10px;
   align-items: center;
   border-radius: 6px;
+  width: 48%;
   gap: 10px;
+  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.1);
 }
 .todo-page .task-container svg {
   cursor: pointer;
+  flex: 0 0 auto;
 }
 .todo-page .task-container .task-text {
-  flex: 1;
+  flex: 1 1 auto;
+}
+.todo-page .task-container .time-text {
+  flex: 0 0 auto;
 }
 .todo-page .task-container input[type=checkbox] {
-  flex-shrink: 0;
+  flex: 0 0 auto;
 }
 .todo-page .task-container input:not([type=checkbox]) {
   padding: 0;
@@ -1225,6 +1232,14 @@ button.rbc-input::-moz-focus-inner {
 .todo-page .task-container.task-container-done {
   background-color: #D0D4CA;
   font-style: italic;
+}
+@media only screen and (max-width: 700px) {
+  .todo-page .task-container {
+    width: 100%;
+  }
+  .todo-page .todo-info-box {
+    flex-wrap: wrap;
+  }
 }
 
 
