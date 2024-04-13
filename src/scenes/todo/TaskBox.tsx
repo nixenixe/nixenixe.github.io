@@ -56,6 +56,7 @@ export const TaskBox = ({task, onCheck, changeTaskValue, deleteTask}: TaskBoxPro
                     autoFocus={true}
                 />}
             {!editTime && <p
+                className="time-text"
                 onClick={() => {
                     if (!task.done) {
                         setEditTime(true)
