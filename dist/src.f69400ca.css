@@ -209,6 +209,13 @@ label {
   justify-content: space-between;
   align-items: center;
 }
+.lecture-box .heart-icon {
+  flex: 0;
+}
+.lecture-box .heart-icon svg {
+  height: 30px;
+  width: 30px;
+}
 .lecture-box .info {
   display: flex;
   flex-direction: column;

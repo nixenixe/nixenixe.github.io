@@ -4,11 +4,15 @@ import "./javazone.less";
 import moment from "moment";
 import {AiFillHeart, AiOutlineHeart} from "react-icons/ai";
 
-export const LectureBox = ({lecture, setFavorites, favorite}: { lecture: Lecture, setFavorites: (fav: string) => void, favorite: boolean }) => {
+export const LectureBox = ({lecture, setFavorites, favorite}: {
+    lecture: Lecture,
+    setFavorites: (fav: string) => void,
+    favorite: boolean
+}) => {
     const saveFavorite = () => {
         setFavorites(lecture.id);
         const storage = localStorage.getItem('favorites');
-        let favorites = [];
+        let favorites: any[] = [];
         if (storage) {
             try {
                 const storageObj: string[] = JSON.parse(storage);
@@ -37,7 +41,14 @@ export const LectureBox = ({lecture, setFavorites, favorite}: { lecture: Lecture
                 <div>{lecture.title}</div>
                 <div className="room">{lecture.room}</div>
             </div>
-            {favorite ? <AiFillHeart onClick={saveFavorite} /> : <AiOutlineHeart onClick={saveFavorite} />}
+            <div className="heart-icon">
+                {favorite ? <AiFillHeart
+                        size={30}
+                        onClick={saveFavorite}/> :
+                    <AiOutlineHeart
+                        onClick={saveFavorite}
+                    />}
+            </div>
         </div>
     )
 }
