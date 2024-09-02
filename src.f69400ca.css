@@ -200,6 +200,9 @@ label {
   }
 }
 
+.rbc-time-column .rbc-timeslot-group {
+  min-height: 200px;
+}
 .lecture-box {
   margin: 10px;
   padding: 10px 20px;
