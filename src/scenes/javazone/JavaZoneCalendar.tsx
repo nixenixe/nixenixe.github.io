@@ -116,6 +116,8 @@ export const JavaZoneCalendar = () => {
                             toolbar={false}
                             defaultDate={'2024-09-04'}
                             events={events}
+                            min={moment('2024-09-04 09:00').toDate()}
+                            max={moment('2024-09-04 20:00').toDate()}
                         />
                     }
                 />
@@ -129,6 +131,8 @@ export const JavaZoneCalendar = () => {
                             toolbar={false}
                             defaultDate={'2024-09-05'}
                             events={events}
+                            min={moment('2024-09-04 09:00').toDate()}
+                            max={moment('2024-09-04 20:00').toDate()}
                         />}
                 />
             </>
