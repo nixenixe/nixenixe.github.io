@@ -11,6 +11,7 @@ import {LectureBox} from "./LectureBox";
 import "./javazone.less";
 import {Spacer} from "../../components/Spacer/Spacer";
 import {Button} from "../../components/Buttons/Button";
+import {IoMdClose} from "react-icons/io";
 
 export const JavaZoneCalendar = () => {
     const [lectures, setLectures] = useState<FetchResponse<LectureResponse> | null>(null);
@@ -18,6 +19,7 @@ export const JavaZoneCalendar = () => {
     const [events, setEvents] = useState<Event[]>([]);
     const [favorites, setFavorites] = useState<string[]>([]);
     const [filterView, setFilterView] = useState<'ALL' | 'FAV'>('FAV');
+    const [event, setEvent] = useState<Event | null>(null);
     const localizer = momentLocalizer(moment);
 
     const lecturesToEvents = (lectures: Lecture[]) => {
@@ -94,6 +96,16 @@ export const JavaZoneCalendar = () => {
     const viewCalendar = () => {
         return (
             <>
+                {event && <div className="popup">
+                    <div className="popup-content">
+                        <h3>{event.title}</h3>
+                        <Spacer size={'s'}/>
+                        <p>{`${event.start ? moment(event.start).format('HH:mm') : ''} -
+                        ${event.end ? moment(event.end).format('HH:mm') : ''}`}</p>
+                        <Spacer size={'s'}/>
+                    </div>
+                    <IoMdClose onClick={() => setEvent(null)}/>
+                </div>}
                 <Spacer size="l"/>
                 <div className="button-container">
                     <Button onClick={() => setFilterView('ALL')}
@@ -118,6 +130,7 @@ export const JavaZoneCalendar = () => {
                             events={events}
                             min={moment('2024-09-04 09:00').toDate()}
                             max={moment('2024-09-04 20:00').toDate()}
+                            onDoubleClickEvent={(e) => setEvent(e)}
                         />
                     }
                 />
@@ -133,7 +146,7 @@ export const JavaZoneCalendar = () => {
                             events={events}
                             min={moment('2024-09-04 09:00').toDate()}
                             max={moment('2024-09-04 20:00').toDate()}
-                            style={{minHeight: '500px'}}
+                            onDoubleClickEvent={(e) => setEvent(e)}
                         />}
                 />
             </>
