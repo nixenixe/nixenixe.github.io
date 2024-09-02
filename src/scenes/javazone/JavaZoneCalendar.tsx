@@ -133,6 +133,7 @@ export const JavaZoneCalendar = () => {
                             events={events}
                             min={moment('2024-09-04 09:00').toDate()}
                             max={moment('2024-09-04 20:00').toDate()}
+                            style={{minHeight: '500px'}}
                         />}
                 />
             </>
