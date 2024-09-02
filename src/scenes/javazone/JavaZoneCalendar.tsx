@@ -14,6 +14,7 @@ import {Button} from "../../components/Buttons/Button";
 
 export const JavaZoneCalendar = () => {
     const [lectures, setLectures] = useState<FetchResponse<LectureResponse> | null>(null);
+    const [view, setView] = useState<'CALENDAR' | 'PROGRAM'>('CALENDAR');
     const [events, setEvents] = useState<Event[]>([]);
     const [favorites, setFavorites] = useState<string[]>([]);
     const [filterView, setFilterView] = useState<'ALL' | 'FAV'>('FAV');
@@ -53,41 +54,28 @@ export const JavaZoneCalendar = () => {
     }, [lectures, filterView, favorites]);
 
     if (lectures === null) {
-        return <Spinner />;
+        return <Spinner/>;
     }
 
     if (lectures === 'ERROR') {
         return <p>Something went wrong.</p>;
     }
 
-    const getLectureList = (lectures: Lecture[]) => {
-        const lecturesWednesday = lectures.filter((l) => moment(l.startTime).date() === 6)
-            .sort((a, b) => a.startTime.localeCompare(b.startTime));
-        const lecturesThursday = lectures.filter((l) => moment(l.startTime).date() === 7)
+    const getLectureList = (lectures: Lecture[], date: number) => {
+        const lecturesDate = lectures.filter((l) => moment(l.startTime).date() === date)
             .sort((a, b) => a.startTime.localeCompare(b.startTime));
         return (
             <div className="lecture-boxes-in-card">
                 <div>
-                    <h3>Wednesday 6. sep</h3>
-                    {lecturesWednesday.map((l) => <LectureBox
+                    {lecturesDate.map((l) => <LectureBox
                         key={l.id}
                         lecture={l}
                         setFavorites={saveFavorite}
-                        favorite={favorites.includes(l.id)} />
+                        favorite={favorites.includes(l.id)}/>
                     )}
                 </div>
-                <div>
-                <h3>Thursday 7. sep</h3>
-                {lecturesThursday.map((l) => <LectureBox
-                    key={l.id}
-                    lecture={l}
-                    setFavorites={saveFavorite}
-                    favorite={favorites.includes(l.id)} />
-                )}
             </div>
-    </div>
-    )
-        ;
+        );
     };
 
     const saveFavorite = (fav: string) => {
@@ -103,49 +91,88 @@ export const JavaZoneCalendar = () => {
         });
     };
 
+    const viewCalendar = () => {
+        return (
+            <>
+                <Spacer size="l"/>
+                <div className="button-container">
+                    <Button onClick={() => setFilterView('ALL')}
+                            className={filterView === 'ALL' ? 'button-selected' : ''}>
+                        All
+                    </Button>
+                    <Spacer size="m"/>
+                    <Button onClick={() => setFilterView('FAV')}
+                            className={filterView === 'FAV' ? 'button-selected' : ''}>
+                        Favorites
+                    </Button>
+                </div>
+                <Spacer size="l"/>
+                <ExpandableCard
+                    label="Wednesday 4. sep"
+                    content={
+                        <Calendar
+                            localizer={localizer}
+                            defaultView="day"
+                            toolbar={false}
+                            defaultDate={'2024-09-04'}
+                            events={events}
+                        />
+                    }
+                />
+                <Spacer size="l"/>
+                <ExpandableCard
+                    label={'Thursday 5. sep'}
+                    content={
+                        <Calendar
+                            localizer={localizer}
+                            defaultView="day"
+                            toolbar={false}
+                            defaultDate={'2024-09-05'}
+                            events={events}
+                        />}
+                />
+            </>
+        );
+    };
+
+    const viewProgram = () => {
+        return (
+            <>
+                <Spacer size="l"/>
+                <ExpandableCard
+                    label="Wednesday 4. sep"
+                    content={getLectureList(lectures.sessions, 4)}
+                />
+                <Spacer size="s"/>
+                <ExpandableCard
+                    label="Thursday 5. sep"
+                    content={getLectureList(lectures.sessions, 5)}
+                />
+            </>
+        );
+    }
+
     return (
         <>
             <h1>JavaZone calendar</h1>
-            <Spacer size="m" />
-            <ExpandableCard
-                label="Lectures"
-                content={getLectureList(lectures.sessions)}
-            />
-            <Spacer size="l" />
+            <Spacer size="m"/>
             <div className="button-container">
-                <Button onClick={() => setFilterView('ALL')} className={filterView === 'ALL' ? 'button-selected' : ''}>
-                    All
+                <Button
+                    className={view === 'CALENDAR' ? 'button-selected' : ''}
+                    onClick={() => setView('CALENDAR')}
+                >
+                    Calendar
                 </Button>
-                <Spacer size="m" />
-                <Button onClick={() => setFilterView('FAV')} className={filterView === 'FAV' ? 'button-selected' : ''}>
-                    Favorites
+                <Spacer size="m"/>
+                <Button
+                    className={view === 'PROGRAM' ? 'button-selected' : ''}
+                    onClick={() => setView('PROGRAM')}
+                >
+                    Program
                 </Button>
             </div>
-            <Spacer size="l" />
-            <div className="calendar-view">
-                <div className="calendar-box">
-                    <h3>Wednesday 6. sep</h3>
-                    <Spacer size="s" />
-                    <Calendar
-                        localizer={localizer}
-                        defaultView="day"
-                        toolbar={false}
-                        defaultDate={'2023-09-06'}
-                        events={events}
-                    />
-                </div>
-                <div className="calendar-box">
-                    <h3>Thursday 7. sep</h3>
-                    <Spacer size="s" />
-                    <Calendar
-                        localizer={localizer}
-                        defaultView="day"
-                        toolbar={false}
-                        defaultDate={'2023-09-07'}
-                        events={events}
-                    />
-                </div>
-            </div>
+            {view === 'CALENDAR' && viewCalendar()}
+            {view === 'PROGRAM' && viewProgram()}
         </>
     );
 }

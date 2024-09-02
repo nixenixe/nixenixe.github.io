@@ -9,7 +9,7 @@ import {PageLayout} from "./components/PageLayout/PageLayout";
 import {TodoPage} from "./scenes/todo/TodoPage";
 
 export const App = () => {
-    const [view, setView] = useState<ViewType>('TODO');
+    const [view, setView] = useState<ViewType>('JAVAZONE');
     return (
         <AppContextProvider value={{view, setView}}>
             <ViewRouter />
