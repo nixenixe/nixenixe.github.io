@@ -19,8 +19,12 @@ export const TodoPage = () => {
     const [currentTask, setCurrentTask] = useState<string>('');
     const [currentTime, setCurrentTime] = useState<string>('');
     const [endTime, setEndTime] = useState<string>('18');
-    const [timeNow, setTimeNow] = useState<Moment>(moment().set('second', 0));
-    const [_, setRefresh] = useState<number>(0);
+    const [timeNow, setTimeNow] = useState<Moment>(moment());
+    const [refresh, setRefresh] = useState<number>(0);
+
+    useEffect(() => {
+        setTimeNow(moment())
+    }, [refresh]);
 
     useEffect(() => {
         const savedTasksString = localStorage.getItem(tasksKey);
