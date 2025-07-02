@@ -20,8 +20,7 @@ export const TodoPage = () => {
     const [currentTime, setCurrentTime] = useState<string>('');
     const [endTime, setEndTime] = useState<string>('18');
     const [timeNow, setTimeNow] = useState<Moment>(moment().set('second', 0));
-
-    console.log(tasks);
+    const [_, setRefresh] = useState<number>(0);
 
     useEffect(() => {
         const savedTasksString = localStorage.getItem(tasksKey);
@@ -169,6 +168,8 @@ export const TodoPage = () => {
         });
     };
 
+    const onRefresh = () => setRefresh((old) => old + 1);
+
     return (
         <div className="todo-page">
             <div className="todo-info-box">
@@ -178,7 +179,10 @@ export const TodoPage = () => {
                 {getInfoWithLabel('Surplus', getSurplus())}
                 {getInfoWithLabel('Start time', getStartTime())}
                 <EndTime endTime={endTime} setEndTime={saveEndTime}/>
-                <IconButton icon="delete" onClick={deleteAll}/>
+                <div className="buttons-row">
+                    <IconButton icon="refresh" onClick={onRefresh}/>
+                    <IconButton icon="delete" onClick={deleteAll}/>
+                </div>
             </div>
             <Spacer size="m"/>
             <div className="todo-input-container">

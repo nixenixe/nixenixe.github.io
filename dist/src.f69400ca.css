@@ -1213,6 +1213,11 @@ button.rbc-input::-moz-focus-inner {
   gap: 10px;
   justify-content: space-between;
 }
+.todo-page .todo-info-box .buttons-row {
+  display: flex;
+  gap: 8px;
+  flex-direction: row;
+}
 .todo-page .todo-input-container {
   display: flex;
   align-items: flex-end;

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {MdDelete} from "react-icons/md";
+import {MdDelete, MdRefresh} from "react-icons/md";
 
 interface IconButtonProps {
-    icon: 'delete';
+    icon: 'delete' | 'refresh';
     onClick: () => void;
 }
 
@@ -10,6 +10,7 @@ export const IconButton = (props: IconButtonProps) => {
     return (
         <div onClick={props.onClick} className="icon-button">
             {props.icon === 'delete' && <MdDelete />}
+            {props.icon === 'refresh' && <MdRefresh />}
         </div>
     )
 }
