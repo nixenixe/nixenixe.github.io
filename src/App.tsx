@@ -1,5 +1,7 @@
 import { Box, HStack } from "@chakra-ui/react";
 import { Link, Route, Routes } from "react-router-dom";
+import logoImg from './assets/nixe.svg'
+
 
 function Home() {
   return <h1>Home</h1>;
@@ -15,7 +17,7 @@ function App() {
       <Box as="nav" w="100%" bg="green.500" p={4}>
         <HStack gap="6">
           <Link to="/">
-            <img src="../public/nixe_favicon.svg" alt="Home" width={50} />
+            <img src={logoImg} alt="Home" width={50} />
           </Link>
           <Link to="/projects">Projects</Link>
         </HStack>
