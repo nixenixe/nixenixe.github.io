@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Input, VStack } from "@chakra-ui/react";
+import { Input, Text, VStack } from "@chakra-ui/react";
 
 interface EndTimeProps {
   endTime: string;
@@ -10,7 +10,8 @@ export const EndTime = ({ endTime, setEndTime }: EndTimeProps) => {
   const [editEndTime, setEditEndTime] = useState<boolean>(false);
 
   return (
-    <VStack align="start" minHeight="64px">
+    <Text fontSize="sm">
+    <VStack align="start" minHeight="53px" gap="0.25">
       <strong>End time</strong>
       {!editEndTime && (
         <p onClick={() => setEditEndTime(true)}>
@@ -35,5 +36,6 @@ export const EndTime = ({ endTime, setEndTime }: EndTimeProps) => {
         />
       )}
     </VStack>
+    </Text>
   );
 };

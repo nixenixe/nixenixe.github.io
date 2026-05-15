@@ -2,7 +2,6 @@ import { Box, Flex } from "@chakra-ui/react";
 import { HomeLogoLink } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
 import { MenuItems } from "./MenuItems";
-import { colorScale } from "@/types";
 
 export const Menu = () => {
   return (
@@ -16,7 +15,7 @@ export const Menu = () => {
       py={3}
       w="100%"
       mx="auto"
-      bg={`${colorScale}.400`}
+      bg="green.400"
     >
       <HomeLogoLink />
       {/* Desktop Menu */}

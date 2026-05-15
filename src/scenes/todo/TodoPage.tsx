@@ -8,6 +8,7 @@ import {
   IconButton,
   Input,
   VStack,
+  Text,
 } from "@chakra-ui/react";
 import { IoRefresh } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
@@ -62,9 +63,11 @@ export const TodoPage = () => {
   };
 
   const infoWithLabel = (label: string, info: string) => (
-    <VStack align="start" minHeight="64px">
-      <strong>{label}:</strong> {info}
-    </VStack>
+    <Text fontSize="sm">
+      <VStack align="start" minHeight="53px" minWidth="83px" gap="0.25">
+        <strong>{label}:</strong> {info}
+      </VStack>
+    </Text>
   );
 
   const checkAsDone = (task: Task) => {
@@ -216,11 +219,16 @@ export const TodoPage = () => {
         borderWidth="1px"
         borderRadius="md"
         padding="4"
+        paddingBottom="5px"
         justifyContent="space-between"
         display="flex"
-        alignItems="center"
+        alignItems="start"
       >
-        <HStack gap="8" minHeight="64px" alignItems="start" flexWrap="wrap">
+        <HStack
+          gap={{ base: 2, md: 8 }}
+          alignItems="start"
+          flexWrap="wrap"
+        >
           {infoWithLabel("Done", getPercentDone())}
           {infoWithLabel("Duration", getTimeAmount())}
           {infoWithLabel("Time left", getTimeLeft())}
@@ -237,7 +245,7 @@ export const TodoPage = () => {
           </IconButton>
         </HStack>
       </Box>
-      <HStack marginTop="8">
+      <HStack marginTop="6">
         <Group attached w="full">
           <Input
             placeholder="Task"
