@@ -1,11 +1,9 @@
-import { Box, HStack } from "@chakra-ui/react";
-import { Link, Route, Routes } from "react-router-dom";
-import logoImg from './assets/nixe.svg'
+import { Route, Routes } from "react-router-dom";
 
-
-function Home() {
-  return <h1>Home</h1>;
-}
+import { routes } from "./routes";
+import { TodoPage } from "./scenes/todo/TodoPage";
+import { Menu } from "./components/Menu";
+import { Box } from "@chakra-ui/react";
 
 function Projects() {
   return <h1>Projects</h1>;
@@ -14,18 +12,13 @@ function Projects() {
 function App() {
   return (
     <>
-      <Box as="nav" w="100%" bg="green.500" p={4}>
-        <HStack gap="6">
-          <Link to="/">
-            <img src={logoImg} alt="Home" width={50} />
-          </Link>
-          <Link to="/projects">Projects</Link>
-        </HStack>
+      <Menu />
+      <Box padding={{base: "5", md: "8"}}>
+        <Routes>
+          <Route path={routes.home} element={<TodoPage />} />
+          <Route path={routes.projects} element={<Projects />} />
+        </Routes>
       </Box>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/projects" element={<Projects />} />
-      </Routes>
     </>
   );
 }
