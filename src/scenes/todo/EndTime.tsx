@@ -10,14 +10,13 @@ export const EndTime = ({ endTime, setEndTime }: EndTimeProps) => {
   const [editEndTime, setEditEndTime] = useState<boolean>(false);
 
   return (
-    <Text fontSize="sm">
     <VStack align="start" minHeight="53px" gap="0.25">
-      <strong>End time</strong>
+      <Text fontSize="sm"><strong>End time</strong></Text>
       {!editEndTime && (
-        <p onClick={() => setEditEndTime(true)}>
+        <Text fontSize="sm" onClick={() => setEditEndTime(true)}>
           {endTime}
           {":00"}
-        </p>
+        </Text>
       )}
       {editEndTime && (
         <Input
@@ -36,6 +35,5 @@ export const EndTime = ({ endTime, setEndTime }: EndTimeProps) => {
         />
       )}
     </VStack>
-    </Text>
   );
 };

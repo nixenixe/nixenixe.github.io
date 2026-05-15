@@ -63,11 +63,12 @@ export const TodoPage = () => {
   };
 
   const infoWithLabel = (label: string, info: string) => (
-    <Text fontSize="sm">
-      <VStack align="start" minHeight="53px" minWidth="83px" gap="0.25">
-        <strong>{label}:</strong> {info}
-      </VStack>
-    </Text>
+    <VStack align="start" minHeight="53px" minWidth="83px" gap="0.25">
+      <Text fontSize="sm">
+        <strong>{label}:</strong>
+      </Text>
+      <Text fontSize="sm">{info}</Text>
+    </VStack>
   );
 
   const checkAsDone = (task: Task) => {
@@ -224,11 +225,7 @@ export const TodoPage = () => {
         display="flex"
         alignItems="start"
       >
-        <HStack
-          gap={{ base: 2, md: 8 }}
-          alignItems="start"
-          flexWrap="wrap"
-        >
+        <HStack gap={{ base: 2, md: 8 }} alignItems="start" flexWrap="wrap">
           {infoWithLabel("Done", getPercentDone())}
           {infoWithLabel("Duration", getTimeAmount())}
           {infoWithLabel("Time left", getTimeLeft())}
