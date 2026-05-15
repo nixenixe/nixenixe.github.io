@@ -22,7 +22,7 @@ export const MobileMenu = () => {
       </Drawer.Trigger>
       <Portal>
         <Drawer.Backdrop backgroundColor="transparent" />
-        <Drawer.Positioner marginTop={74}>
+        <Drawer.Positioner marginTop="54px">
           <Drawer.Content bg="green.400" shadow="none">
             <Drawer.Body>
               <MenuItems isMobile />

@@ -6,7 +6,7 @@ interface LogoProps {
   width?: number;
 }
 
-export const HomeLogoLink = ({ width = 50 }: LogoProps) => {
+export const HomeLogoLink = ({ width = 24 }: LogoProps) => {
   return (
     <Link to={routes.home}>
       <img src={logoImg} alt="Home" width={width} />
