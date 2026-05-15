@@ -13,7 +13,7 @@ function App() {
   return (
     <>
       <Menu />
-      <Box padding={{base: "5", md: "8"}}>
+      <Box padding={{base: "4", md: "6"}}>
         <Routes>
           <Route path={routes.home} element={<TodoPage />} />
           <Route path={routes.projects} element={<Projects />} />
