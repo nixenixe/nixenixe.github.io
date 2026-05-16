@@ -84,7 +84,7 @@ export const TaskBox = ({
             <span onClick={() => setEditTime(true)}>{task.time}</span>
           )}
         </HStack>
-        <IconButton variant="subtle" onClick={() => deleteTask(task)} bg="orange.subtle">
+        <IconButton variant="subtle" onClick={() => deleteTask(task)}>
           <MdDelete />
         </IconButton>
       </HStack>

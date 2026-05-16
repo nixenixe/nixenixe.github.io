@@ -234,10 +234,10 @@ export const TodoPage = () => {
           <EndTime endTime={endTime} setEndTime={saveEndTime} />
         </HStack>
         <HStack>
-          <IconButton variant="subtle" onClick={onRefresh} bg="orange.subtle">
+          <IconButton variant="subtle" onClick={onRefresh}>
             <IoRefresh />
           </IconButton>
-          <IconButton variant="subtle" onClick={deleteAll} bg="orange.subtle">
+          <IconButton variant="subtle" onClick={deleteAll}>
             <MdDelete />
           </IconButton>
         </HStack>
@@ -265,7 +265,7 @@ export const TodoPage = () => {
               }
             }}
           />
-          <Button disabled={!currentTask || !currentTime} onClick={addTask}>
+          <Button disabled={!currentTask || !currentTime} onClick={addTask} colorPalette="orange">
             Add
           </Button>
         </Group>
