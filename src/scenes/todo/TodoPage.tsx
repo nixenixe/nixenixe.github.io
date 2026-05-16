@@ -14,7 +14,7 @@ import { IoRefresh } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 import { TaskBox } from "./TaskBox";
 import { useState } from "react";
-import { colorScale, type SortType, type Task } from "@/types";
+import { type SortType, type Task } from "@/types";
 import type { Moment } from "moment";
 import moment from "moment";
 import { v4 as uuidv4 } from "uuid";
@@ -216,7 +216,7 @@ export const TodoPage = () => {
   return (
     <>
       <Box
-        borderColor={`${colorScale}.500`}
+        borderColor="orange.focusRing"
         borderWidth="1px"
         borderRadius="md"
         padding="4"
@@ -234,10 +234,10 @@ export const TodoPage = () => {
           <EndTime endTime={endTime} setEndTime={saveEndTime} />
         </HStack>
         <HStack>
-          <IconButton variant="subtle" onClick={onRefresh}>
+          <IconButton variant="subtle" onClick={onRefresh} bg="orange.subtle">
             <IoRefresh />
           </IconButton>
-          <IconButton variant="subtle" onClick={deleteAll}>
+          <IconButton variant="subtle" onClick={deleteAll} bg="orange.subtle">
             <MdDelete />
           </IconButton>
         </HStack>
@@ -265,11 +265,7 @@ export const TodoPage = () => {
               }
             }}
           />
-          <Button
-            colorPalette={colorScale}
-            disabled={!currentTask || !currentTime}
-            onClick={addTask}
-          >
+          <Button disabled={!currentTask || !currentTime} onClick={addTask}>
             Add
           </Button>
         </Group>

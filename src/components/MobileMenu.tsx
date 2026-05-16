@@ -15,7 +15,7 @@ export const MobileMenu = () => {
     >
       <Drawer.Trigger asChild>
         <button style={{cursor: 'pointer'}}>
-          <Icon asChild color="green.800">
+          <Icon asChild color="fg">
             <IconTag size={30} />
           </Icon>
         </button>
@@ -23,7 +23,7 @@ export const MobileMenu = () => {
       <Portal>
         <Drawer.Backdrop backgroundColor="transparent" />
         <Drawer.Positioner marginTop="54px">
-          <Drawer.Content bg="green.400" shadow="none">
+          <Drawer.Content bg="orange.emphasized" shadow="none">
             <Drawer.Body>
               <MenuItems isMobile />
             </Drawer.Body>

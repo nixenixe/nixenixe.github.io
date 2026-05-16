@@ -1,5 +1,3 @@
-export const colorScale = "pink";
-
 export interface MenuItemData {
     label: string;
     path: string;

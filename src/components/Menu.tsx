@@ -15,7 +15,7 @@ export const Menu = () => {
       py={3}
       w="100%"
       mx="auto"
-      bg="green.400"
+      bg="orange.emphasized"
     >
       <HomeLogoLink />
       {/* Desktop Menu */}

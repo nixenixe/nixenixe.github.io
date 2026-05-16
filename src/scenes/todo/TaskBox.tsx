@@ -1,4 +1,4 @@
-import { colorScale, type Task } from "@/types";
+import { type Task } from "@/types";
 import { Box, Checkbox, HStack, IconButton, Input } from "@chakra-ui/react";
 import { useState } from "react";
 import { MdDelete } from "react-icons/md";
@@ -42,22 +42,24 @@ export const TaskBox = ({
 
   return (
     <Box
-      borderColor={`${colorScale}.500`}
+      borderColor="orange.focusRing"
       borderWidth="1px"
       borderRadius="md"
       padding="4"
-         backgroundColor={task.done ? `${colorScale}.100` : "transparent"}
+      backgroundColor={task.done ? "orange.subtle" : "transparent"}
     >
       <HStack w="full">
-        <Checkbox.Root
-          checked={task.done}
-          onChange={() => onCheck(task)}
-        >
+        <Checkbox.Root checked={task.done} onChange={() => onCheck(task)}>
           <Checkbox.HiddenInput />
           <Checkbox.Control />
           <Checkbox.Label>{""}</Checkbox.Label>
         </Checkbox.Root>
-        <HStack gap="4" justifyContent="space-between" w="full" paddingRight="4">
+        <HStack
+          gap="4"
+          justifyContent="space-between"
+          w="full"
+          paddingRight="4"
+        >
           {editTask ? (
             <Input
               defaultValue={task.taskDescription}
@@ -82,7 +84,7 @@ export const TaskBox = ({
             <span onClick={() => setEditTime(true)}>{task.time}</span>
           )}
         </HStack>
-        <IconButton variant="subtle" onClick={() => deleteTask(task)}>
+        <IconButton variant="subtle" onClick={() => deleteTask(task)} bg="orange.subtle">
           <MdDelete />
         </IconButton>
       </HStack>
