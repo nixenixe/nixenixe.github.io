@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 
 import { routes } from "./routes";
-import { TodoPage } from "./scenes/Todo/TodoPage";
 import { Menu } from "./components/Menu";
 import { Box, Spinner } from "@chakra-ui/react";
 import { VacationPage } from "./scenes/Vacation/VacationPage";
@@ -12,6 +11,7 @@ import { UserProvider, type UserInfo } from "./User.context";
 import { supabase } from "./supabaseClient";
 import { ProfilePage } from "./scenes/Profile/ProfilePage";
 import { LoginPage } from "./scenes/Login/LoginPage";
+import { TodoPage } from "./scenes/Todo/TodoPage";
 
 function App() {
   const [user, setUser] = useState<UserInfo | null | "ERROR">(null);
