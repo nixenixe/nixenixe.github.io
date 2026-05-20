@@ -8,7 +8,7 @@ interface LogoProps {
 
 export const HomeLogoLink = ({ width = 24 }: LogoProps) => {
   return (
-    <Link to={routes.home}>
+    <Link to={routes.HOME}>
       <img src={logoImg} alt="Home" width={width} />
     </Link>
   );

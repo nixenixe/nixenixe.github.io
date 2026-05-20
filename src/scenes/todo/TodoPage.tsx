@@ -12,16 +12,16 @@ import {
 } from "@chakra-ui/react";
 import { IoRefresh } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
-import { TaskBox } from "./TaskBox";
 import { useState } from "react";
 import { type SortType, type Task } from "@/types";
 import type { Moment } from "moment";
 import moment from "moment";
 import { v4 as uuidv4 } from "uuid";
 import { formatDuration } from "@/utils";
-import { EndTime } from "./EndTime";
 import { FaSortAlphaDown } from "react-icons/fa";
 import { FaSortAlphaUp } from "react-icons/fa";
+import { EndTime } from "./EndTime";
+import { TaskBox } from "./TaskBox";
 
 export const TodoPage = () => {
   const tasksKey = "tasks";
@@ -242,7 +242,7 @@ export const TodoPage = () => {
           </IconButton>
         </HStack>
       </Box>
-      <HStack marginTop="6">
+      <HStack marginTop="4">
         <Group attached w="full">
           <Input
             placeholder="Task"
@@ -270,7 +270,7 @@ export const TodoPage = () => {
           </Button>
         </Group>
       </HStack>
-      <HStack w="full" justifyContent="end" marginTop="4">
+      <HStack w="full" justifyContent="end" marginTop="2">
         <Button
           variant="ghost"
           size="xs"
@@ -311,7 +311,7 @@ export const TodoPage = () => {
         </Button>
       </HStack>
       <Grid
-        paddingTop="4"
+        paddingTop="2"
         templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(3, 1fr)" }}
         gap="4"
       >
