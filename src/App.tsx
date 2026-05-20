@@ -60,8 +60,8 @@ function App() {
     return (
       <UserProvider user={user} setUser={setUser}>
         <Routes>
-          <Route path={routes.PROFILE} element={<ProfilePage />} />
           <Route path={routes.HOME} element={<TodoPage />} />
+          <Route path={routes.PROFILE} element={<ProfilePage />} />
           <Route path={routes.VACATION} element={<VacationPage />} />
         </Routes>
       </UserProvider>
