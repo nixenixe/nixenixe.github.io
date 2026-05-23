@@ -2,6 +2,7 @@ import { Box, Flex } from "@chakra-ui/react";
 import { HomeLogoLink } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
 import { MenuItems } from "./MenuItems";
+import { ProfileIconPopover } from "./ProfileIconPopover";
 
 interface MenuProps {
   isLoggedIn: boolean;
@@ -23,12 +24,15 @@ export const Menu = ({ isLoggedIn }: MenuProps) => {
       minHeight="64px"
     >
       <HomeLogoLink />
+
       {/* Desktop Menu */}
       {isLoggedIn && (
         <Box display={{ base: "none", md: "block" }}>
           <MenuItems />
         </Box>
       )}
+
+      <ProfileIconPopover />
 
       {/* Mobile Drawer */}
       {isLoggedIn && (

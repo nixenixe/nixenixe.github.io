@@ -55,7 +55,7 @@ export const LoginPage = () => {
 
         {errorMessage && <p>{errorMessage}</p>}
 
-        <Button type="submit" disabled={loading} loading={loading}>
+        <Button type="submit" disabled={loading} loading={loading} colorPalette="orange">
           Log in
         </Button>
       </form>

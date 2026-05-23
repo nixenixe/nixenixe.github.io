@@ -1,55 +1,70 @@
-import { type Task } from "@/types";
-import { Box, Checkbox, HStack, IconButton, Input } from "@chakra-ui/react";
-import { useState } from "react";
+import {
+  Box,
+  Checkbox,
+  Editable,
+  HStack,
+  IconButton,
+} from "@chakra-ui/react";
 import { MdDelete } from "react-icons/md";
+import type { Task } from "./types";
+import { toaster } from "@/components/ui/toaster";
+import { deleteTodo, updateTodoValues } from "./server";
+import { useState } from "react";
 
 interface TaskBoxProps {
   task: Task;
-  onCheck: (task: Task) => void;
-  changeTaskValue: (newValues: Task) => void;
-  deleteTask: (task: Task) => void;
+  refreshTasks: () => void;
 }
-export const TaskBox = ({
-  task,
-  onCheck,
-  changeTaskValue,
-  deleteTask,
-}: TaskBoxProps) => {
-  const [editTask, setEditTask] = useState<boolean>(false);
-  const [editTime, setEditTime] = useState<boolean>(false);
+export const TaskBox = ({ task, refreshTasks }: TaskBoxProps) => {
+  const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
+  const [updateLoading, setUpdateLoading] = useState<boolean>(false);
+  const [newTitle, setNewTitle] = useState<string>(task.title);
+  const [newDuration, setNewDuration] = useState<number>(task.duration_minutes);
 
-  const onTaskBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (e.currentTarget.value !== "") {
-      const newValues: Task = {
-        ...task,
-        taskDescription: e.currentTarget.value,
-      };
-      changeTaskValue(newValues);
-    }
-    setEditTask(false);
+  const changeTaskValue = (newValues: Task) => {
+    setUpdateLoading(true);
+    updateTodoValues(task.id, newValues).then((res) => {
+      setUpdateLoading(false);
+      if (res === "ERROR") {
+        toaster.create({
+          title: "Couldn't update task. Please try again later.",
+          type: "error",
+        });
+        return;
+      }
+      refreshTasks();
+    });
   };
 
-  const onTimeBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (e.currentTarget.value !== "") {
-      const newValues: Task = {
-        ...task,
-        time: parseInt(e.currentTarget.value),
-      };
-      changeTaskValue(newValues);
-    }
-    setEditTime(false);
+  const deleteTask = () => {
+    setDeleteLoading(true);
+    deleteTodo(task.id).then((res) => {
+      if (res === "ERROR") {
+        toaster.create({ type: "error", title: "Error deleting task" });
+        setDeleteLoading(false);
+        return;
+      }
+      refreshTasks();
+    });
   };
 
   return (
     <Box
-      borderColor="orange.focusRing"
+      borderColor="orange.border"
       borderWidth="1px"
       borderRadius="md"
       padding="4"
-      backgroundColor={task.done ? "orange.subtle" : "transparent"}
+      backgroundColor={task.completed ? "orange.subtle" : "transparent"}
+      position="relative"
     >
       <HStack w="full">
-        <Checkbox.Root checked={task.done} onChange={() => onCheck(task)}>
+        <Checkbox.Root
+          checked={task.completed}
+          colorPalette="orange"
+          onChange={() =>
+            changeTaskValue({ ...task, completed: !task.completed })
+          }
+        >
           <Checkbox.HiddenInput />
           <Checkbox.Control />
           <Checkbox.Label>{""}</Checkbox.Label>
@@ -60,31 +75,32 @@ export const TaskBox = ({
           w="full"
           paddingRight="4"
         >
-          {editTask ? (
-            <Input
-              defaultValue={task.taskDescription}
-              onBlur={onTaskBlur}
-              autoFocus
-              size="sm"
-            />
-          ) : (
-            <span onClick={() => setEditTask(true)}>
-              {task.taskDescription}
-            </span>
-          )}
-          {editTime ? (
-            <Input
-              defaultValue={task.time.toString()}
-              onBlur={onTimeBlur}
-              autoFocus
-              size="sm"
-              w="4"
-            />
-          ) : (
-            <span onClick={() => setEditTime(true)}>{task.time}</span>
-          )}
+          <Editable.Root
+            value={task.title}
+            onValueChange={(e) => setNewTitle(e.value)}
+            onBlur={() => changeTaskValue({ ...task, title: newTitle })}
+          >
+            <Editable.Preview />
+            <Editable.Input />
+          </Editable.Root>
+          <Editable.Root
+            value={task.duration_minutes.toString()}
+            onValueChange={(e) => setNewDuration(parseInt(e.value))}
+            onBlur={() =>
+              changeTaskValue({ ...task, duration_minutes: newDuration })
+            }
+            justifyContent="end"
+          >
+            <Editable.Preview />
+            <Editable.Input />
+          </Editable.Root>
         </HStack>
-        <IconButton variant="subtle" onClick={() => deleteTask(task)}>
+        <IconButton
+          variant="subtle"
+          onClick={deleteTask}
+          loading={deleteLoading || updateLoading}
+          size="sm"
+        >
           <MdDelete />
         </IconButton>
       </HStack>

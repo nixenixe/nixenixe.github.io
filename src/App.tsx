@@ -2,19 +2,25 @@ import { Route, Routes } from "react-router-dom";
 
 import { routes } from "./routes";
 import { Menu } from "./components/Menu";
-import { Box, Spinner } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { VacationPage } from "./scenes/Vacation/VacationPage";
 
 import { useEffect, useState } from "react";
 
 import { UserProvider, type UserInfo } from "./User.context";
 import { supabase } from "./supabaseClient";
-import { ProfilePage } from "./scenes/Profile/ProfilePage";
 import { LoginPage } from "./scenes/Login/LoginPage";
-import { TodoPage } from "./scenes/Todo/TodoPage";
+import { Todo } from "./scenes/Todo";
+import { FullPageSpinner } from "./components/FullPageSpinner";
+import { Message } from "./components/Message";
+import { Toaster } from "./components/ui/toaster";
+import type { FetchResult, ProfileInfo } from "./types";
+import { getProfile } from "./server";
+import { Profile } from "./scenes/Profile";
 
 function App() {
-  const [user, setUser] = useState<UserInfo | null | "ERROR">(null);
+  const [user, setUser] = useState<FetchResult<UserInfo> | null>(null);
+  const [profile, setProfile] = useState<FetchResult<ProfileInfo> | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
@@ -25,6 +31,11 @@ function App() {
 
       setUser(user ? { id: user.id, email: user.email ?? "" } : null);
       setAuthLoading(false);
+
+      if (user) {
+        const profileResult = await getProfile();
+        setProfile(profileResult);
+      }
     }
 
     getInitialUser();
@@ -44,13 +55,18 @@ function App() {
     };
   }, []);
 
+  const getProfileInfo = async () => {
+    const profileResult = await getProfile();
+    setProfile(profileResult);
+  };
+
   const getContent = () => {
     if (authLoading) {
-      return <Spinner size="xl" />;
+      return <FullPageSpinner />;
     }
 
     if (user === "ERROR") {
-      return <div>Error loading user</div>;
+      return <Message type="error">Could't get user information</Message>;
     }
 
     if (!user) {
@@ -58,21 +74,34 @@ function App() {
     }
 
     return (
-      <UserProvider user={user} setUser={setUser}>
-        <Routes>
-          <Route path={routes.HOME} element={<TodoPage />} />
-          <Route path={routes.PROFILE} element={<ProfilePage />} />
-          <Route path={routes.VACATION} element={<VacationPage />} />
-        </Routes>
-      </UserProvider>
+      <Routes>
+        <Route path={routes.HOME} element={<Todo />} />
+        <Route path={routes.PROFILE} element={<Profile />} />
+        <Route path={routes.VACATION} element={<VacationPage />} />
+      </Routes>
     );
   };
 
   return (
-    <>
+    <UserProvider user={user} profile={profile} getProfileInfo={getProfileInfo}>
+      <Toaster />
       <Menu isLoggedIn={!!user} />
-      <Box padding={{ base: "4", md: "6" }}>{getContent()}</Box>
-    </>
+      <Box padding={{ base: "4", md: "6" }} maxW="1920px" mx="auto" w="full">
+        {getContent()}
+      </Box>
+      <Box
+        as="footer"
+        textAlign="center"
+        padding="2"
+        color="gray.500"
+        position="absolute"
+        bottom={0}
+        right={0}
+        fontSize="sm"
+      >
+        &copy; {new Date().getFullYear()} Nixenixe. All rights reserved.
+      </Box>
+    </UserProvider>
   );
 }
 

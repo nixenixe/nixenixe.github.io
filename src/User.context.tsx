@@ -1,25 +1,27 @@
-import React, { createContext, type ReactNode } from "react";
+import React, { type ReactNode } from "react";
+import { UserContext, type ProfileInfo } from "./types";
 
 export interface UserInfo {
   id: string;
   email: string;
 }
 
-interface UserContextType {
+export interface UserContextType {
   user: UserInfo | null | "ERROR";
-  setUser: React.Dispatch<React.SetStateAction<UserInfo | null | "ERROR">>;
+  profile: ProfileInfo | null | "ERROR";
+  getProfileInfo: () => Promise<void>;
 }
-
-const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{
   children: ReactNode;
   user: UserInfo | null | "ERROR";
-  setUser: React.Dispatch<React.SetStateAction<UserInfo | null | "ERROR">>;
-}> = ({ children, user, setUser }) => {
+  profile: ProfileInfo | null | "ERROR";
+  getProfileInfo: () => Promise<void>;
+}> = ({ children, user, profile, getProfileInfo }) => {
   const value: UserContextType = {
     user,
-    setUser,
+    profile,
+    getProfileInfo,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
