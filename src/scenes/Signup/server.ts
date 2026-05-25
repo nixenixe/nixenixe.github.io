@@ -1,5 +1,6 @@
 import { supabase } from "@/supabaseClient";
 import type { FetchResultWithError } from "@/types";
+import { getEmailRedirectUrl } from "@/utils";
 
 export async function createUser(values: {
   email: string;
@@ -9,18 +10,6 @@ export async function createUser(values: {
   const email = values.email.trim().toLowerCase();
   const name = values.name.trim();
 
-  /*if (!email) {
-    throw new Error("Email is required");
-  }
-
-  if (!name) {
-    throw new Error("Name is required");
-  }
-
-  if (values.password.length < 8) {
-    throw new Error("Password must be at least 8 characters");
-  }*/
-
   const { error } = await supabase.auth.signUp({
     email,
     password: values.password,
@@ -28,7 +17,7 @@ export async function createUser(values: {
       data: {
         name,
       },
-      emailRedirectTo: `${window.location.origin}/#/email-confirmation?type=signup`,
+      emailRedirectTo: `${getEmailRedirectUrl()}/email-confirmation?type=signup`,
     },
   });
 

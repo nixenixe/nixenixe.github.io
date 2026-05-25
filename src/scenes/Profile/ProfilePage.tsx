@@ -31,11 +31,7 @@ export const ProfilePage = ({
       <Separator marginY={4} />
       <ChangePassword />
       <Separator marginY={4} />
-      <Button
-        onClick={() => supabase.auth.signOut()}
-        colorPalette="orange"
-        variant="subtle"
-      >
+      <Button onClick={() => supabase.auth.signOut()} variant="subtle" marginBottom={16}>
         Log out
       </Button>
     </Stack>

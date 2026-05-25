@@ -63,7 +63,6 @@ export const ProfileIconPopover = () => {
                     justifyContent="start"
                     paddingInline={2}
                     size="xs"
-                    colorPalette="orange"
                     asChild
                   >
                     <ReactLink to="/profile">
@@ -81,7 +80,6 @@ export const ProfileIconPopover = () => {
                   <Button
                     onClick={() => supabase.auth.signOut()}
                     size="xs"
-                    colorPalette="orange"
                     variant="subtle"
                   >
                     Log out

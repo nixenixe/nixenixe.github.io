@@ -4,9 +4,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { handleLogin } from "./server";
 import { Message } from "@/components/Message";
-import { Link as ReactLink } from "react-router-dom";
+import { Link as ReactLink, useNavigate } from "react-router-dom";
 import { routes } from "@/routes";
 import { FaRegFaceSmileWink } from "react-icons/fa6";
+import { NarrowCenteredPage } from "@/components/NarrowCenteredPage";
 
 type LoginForm = {
   email: string;
@@ -14,6 +15,7 @@ type LoginForm = {
 };
 
 export const LoginPage = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -24,72 +26,85 @@ export const LoginPage = () => {
 
   const submitLogin = (data: LoginForm) => {
     return new Promise<void>((resolve) => {
+      setErrorMessage("");
       handleLogin(data.email, data.password).then((res) => {
         if (res.type === "ERROR") {
-          setErrorMessage(res.message);
+          const message =
+            res.code === "invalid_credentials"
+              ? "Either email or password is incorrect. Please try again."
+              : "Couldn't log in. Please try again later.";
+          setErrorMessage(message);
           resolve();
           return;
         }
         resolve();
-        return;
+        navigate(routes.HOME);
       });
     });
   };
 
   return (
-    <VStack gap={6} align="stretch" maxW="md" mx="auto" mt={10} asChild>
-      <form onSubmit={handleSubmit(submitLogin)}>
-        <Heading>Log in</Heading>
-        <Field.Root invalid={!!errors.email}>
-          <Field.Label>Email</Field.Label>
-          <Input
-            type="email"
-            autoComplete="email"
-            {...register("email", {
-              required: true,
-              pattern: {
-                value: /\S+@\S+\.\S+/,
-                message: "Entered value does not match email format",
-              },
-            })}
-          />
-          <Field.ErrorText width="full">
-            <Field.ErrorIcon />
-            {errors.email?.message || "This field is required"}
-          </Field.ErrorText>
-        </Field.Root>
+    <NarrowCenteredPage>
+      <VStack gap={6} asChild alignItems="start">
+        <form onSubmit={handleSubmit(submitLogin)}>
+          <Heading>Log in</Heading>
+          <Field.Root invalid={!!errors.email}>
+            <Field.Label>Email</Field.Label>
+            <Input
+              type="email"
+              autoComplete="email"
+              {...register("email", {
+                required: true,
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: "Entered value does not match email format",
+                },
+              })}
+            />
+            <Field.ErrorText width="full">
+              <Field.ErrorIcon />
+              {errors.email?.message || "This field is required"}
+            </Field.ErrorText>
+          </Field.Root>
 
-        <Field.Root invalid={!!errors.password}>
-          <Field.Label>Password</Field.Label>
-          <PasswordInput
-            type="password"
-            visible={visible}
-            onVisibleChange={setVisible}
-            autoComplete="current-password"
-            {...register("password", { required: true })}
-          />
-          <Field.ErrorText width="full">
-            <Field.ErrorIcon />
-            {errors.password?.message || "This field is required"}
-          </Field.ErrorText>
-        </Field.Root>
+          <VStack w="full" alignItems="end">
+            <Field.Root invalid={!!errors.password}>
+              <Field.Label>Password</Field.Label>
+              <PasswordInput
+                type="password"
+                visible={visible}
+                onVisibleChange={setVisible}
+                autoComplete="current-password"
+                {...register("password", { required: true })}
+              />
+              <Field.ErrorText width="full">
+                <Field.ErrorIcon />
+                {errors.password?.message || "This field is required"}
+              </Field.ErrorText>
+            </Field.Root>
+            <Link asChild>
+              <ReactLink to={routes.FORGOT_PASSWORD}>
+                Forgot your password?
+              </ReactLink>
+            </Link>
+          </VStack>
 
-        {errorMessage && <Message type="error">{errorMessage}</Message>}
+          {errorMessage && <Message type="error">{errorMessage}</Message>}
 
-        <Button
-          type="submit"
-          disabled={isSubmitting || !isDirty}
-          loading={isSubmitting}
-          colorPalette="orange"
-        >
-          Log in
-        </Button>
-        <Link colorPalette="orange" marginTop="4" asChild>
-          <ReactLink to={routes.SIGNUP}>
-            Don't have an account? Sign up <FaRegFaceSmileWink />
-          </ReactLink>
-        </Link>
-      </form>
-    </VStack>
+          <Button
+            type="submit"
+            disabled={isSubmitting || !isDirty}
+            loading={isSubmitting}
+          >
+            Log in
+          </Button>
+        </form>
+      </VStack>
+      <Link marginTop="4" asChild>
+        <ReactLink to={routes.SIGNUP}>
+          Don't have an account? Sign up <FaRegFaceSmileWink />
+        </ReactLink>
+      </Link>
+    </NarrowCenteredPage>
   );
 };

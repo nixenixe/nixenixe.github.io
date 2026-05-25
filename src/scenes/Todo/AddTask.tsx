@@ -19,7 +19,7 @@ export const AddTask = ({ refreshTasks }: AddTaskProps) => {
     reset,
     formState: { errors, isSubmitting },
   } = useForm<AddTaskForm>();
-  
+
   const onSubmit: SubmitHandler<AddTaskForm> = (data) => {
     return new Promise<void>((resolve) => {
       addTodo(data.title, data.duration_minutes).then((res) => {
@@ -76,7 +76,7 @@ export const AddTask = ({ refreshTasks }: AddTaskProps) => {
             </Field.ErrorText>
           )}
         </Field.Root>
-        <Button colorPalette="orange" loading={isSubmitting} type="submit">
+        <Button loading={isSubmitting} type="submit">
           Add
         </Button>
       </Group>

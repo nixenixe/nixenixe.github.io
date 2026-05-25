@@ -1,30 +1,18 @@
 import { toaster } from "@/components/ui/toaster";
-import { Button, Field, Heading, Input, VStack } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
 import { updatePassword } from "./server";
-
-type ChangePasswordForm = {
-  newPassword: string;
-  confirmNewPassword: string;
-};
+import {
+  ChangePasswordForm,
+  type ChangePasswordFormType,
+} from "@/components/ChangePassword/ChangePasswordForm";
 
 export const ChangePassword = () => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    getValues,
-    formState: { errors, isDirty, isSubmitting },
-  } = useForm<ChangePasswordForm>({defaultValues: { newPassword: "", confirmNewPassword: "" }});
-  const newPasswordValue = getValues("newPassword");
-
-  const onSubmit = (data: ChangePasswordForm) => {
+  const onSubmit = (data: ChangePasswordFormType, reset: () => void) => {
     return new Promise<void>((resolve) => {
       updatePassword(data.newPassword).then((res) => {
         reset();
-        if (res === "ERROR") {
+        if (res.type === "ERROR") {
           toaster.create({
-            title: "Couldn't change password. Please try again later.",
+            title: res.message || "Couldn't change password. Please try again later.",
             type: "error",
           });
           resolve();
@@ -39,47 +27,5 @@ export const ChangePassword = () => {
     });
   };
 
-  return (
-    <VStack gap={6} w="full" asChild alignItems="start">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Heading size="md">Change password</Heading>
-        <Field.Root invalid={!!errors.newPassword}>
-          <Field.Label>New password</Field.Label>
-          <Input
-            {...register("newPassword", { required: true, minLength: 8 })}
-            type="password"
-          />
-          <Field.ErrorText width="full">
-            <Field.ErrorIcon />
-            {errors.newPassword?.type === "minLength"
-              ? "Password must be at least 8 characters"
-              : "This field is required"}
-          </Field.ErrorText>
-        </Field.Root>
-        <Field.Root invalid={!!errors.confirmNewPassword}>
-          <Field.Label>Confirm new password</Field.Label>
-          <Input
-            {...register("confirmNewPassword", {
-              required: true,
-              validate: (value) =>
-                value === newPasswordValue ? true : "Passwords do not match",
-            })}
-            type="password"
-          />
-          <Field.ErrorText width="full">
-            <Field.ErrorIcon />
-            {errors.confirmNewPassword?.message || "This field is required"}
-          </Field.ErrorText>
-        </Field.Root>
-        <Button
-          type="submit"
-          colorPalette="orange"
-          loading={isSubmitting}
-          disabled={!isDirty}
-        >
-          Change password
-        </Button>
-      </form>
-    </VStack>
-  );
+  return <ChangePasswordForm updatePassword={onSubmit} />;
 };

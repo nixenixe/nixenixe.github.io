@@ -25,12 +25,17 @@ export const NameForm = ({ profile, getProfileInfo }: NameFormProps) => {
       updateProfileName(data.name).then((res) => {
         if (res === "ERROR") {
           toaster.create({
-            title: "Couldn't update profile. Please try again later.",
+            title: "Couldn't change name. Please try again later.",
             type: "error",
           });
           resolve();
           return;
         }
+
+        toaster.create({
+          title: "Name changed successfully.",
+          type: "success",
+        });
         resolve();
         getProfileInfo();
       });
@@ -52,7 +57,6 @@ export const NameForm = ({ profile, getProfileInfo }: NameFormProps) => {
           type="submit"
           marginTop="4"
           loading={isSubmitting}
-          colorPalette="orange"
           disabled={!isDirty}
         >
           Save

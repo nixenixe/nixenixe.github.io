@@ -1,11 +1,26 @@
 "use client";
 
-import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
+import {
+  ChakraProvider,
+  createSystem,
+  defaultConfig,
+  defineConfig,
+} from "@chakra-ui/react";
 import { ThemeProvider, type ThemeProviderProps } from "next-themes";
 
 export function Provider(props: ThemeProviderProps) {
+  const config = defineConfig({
+    globalCss: {
+      html: {
+        colorPalette: "orange",
+      },
+    },
+  });
+
+  const system = createSystem(defaultConfig, config);
+
   return (
-    <ChakraProvider value={defaultSystem}>
+    <ChakraProvider value={system}>
       <ThemeProvider
         attribute="class"
         forcedTheme="light"

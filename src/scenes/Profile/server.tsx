@@ -1,5 +1,6 @@
 import { supabase } from "@/supabaseClient";
 import type { FetchResultWithError } from "@/types";
+import { getEmailRedirectUrl } from "@/utils";
 import type { User } from "@supabase/supabase-js";
 
 export async function updateProfileName(name: string) {
@@ -28,16 +29,16 @@ export async function updateProfileName(name: string) {
   return data;
 }
 
-export async function updatePassword(newPassword: string) {
+export async function updatePassword(newPassword: string): Promise<FetchResultWithError<User>> {
   const { data, error } = await supabase.auth.updateUser({
     password: newPassword,
   });
 
   if (error) {
-    return "ERROR";
+    return { ...error.toJSON(), type: "ERROR" };
   }
 
-  return data;
+  return { type: "DATA", data: data.user };
 }
 
 export async function updateEmail(newEmail: string): Promise<FetchResultWithError<User>> {
@@ -48,7 +49,7 @@ export async function updateEmail(newEmail: string): Promise<FetchResultWithErro
       email,
     },
     {
-      emailRedirectTo: `${window.location.origin}/#/email-confirmation?type=email_change`,
+      emailRedirectTo: `${getEmailRedirectUrl()}/email-confirmation?type=email_change`,
     },
   );
 

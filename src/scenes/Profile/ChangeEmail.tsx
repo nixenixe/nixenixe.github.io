@@ -29,10 +29,10 @@ export const ChangeEmail = ({ getUserInfo }: ChangeEmailProps) => {
     handleSubmit,
     reset,
     formState: { errors, isDirty },
-  } = useForm<ChangeEmailForm>({defaultValues: { newEmail: "" }});
+  } = useForm<ChangeEmailForm>({ defaultValues: { newEmail: "" } });
 
   const onSubmit = (data: ChangeEmailForm) => {
-    setPendingEmail(data.newEmail);
+    setPendingEmail(data.newEmail.trim().toLowerCase());
   };
 
   const saveConfirmedEmail = () => {
@@ -70,8 +70,9 @@ export const ChangeEmail = ({ getUserInfo }: ChangeEmailProps) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Heading size="md">Change email</Heading>
         <Field.Root invalid={!!errors.newEmail}>
-          <Field.Label>New email</Field.Label>
+          <Field.Label hidden>New email</Field.Label>
           <Input
+            placeholder="New email"
             {...register("newEmail", {
               required: true,
               pattern: {
@@ -88,7 +89,7 @@ export const ChangeEmail = ({ getUserInfo }: ChangeEmailProps) => {
         </Field.Root>
         <Dialog.Root>
           <Dialog.Trigger asChild>
-            <Button colorPalette="orange" disabled={!isDirty} type="submit">
+            <Button disabled={!isDirty} type="submit">
               Save
             </Button>
           </Dialog.Trigger>
@@ -115,7 +116,6 @@ export const ChangeEmail = ({ getUserInfo }: ChangeEmailProps) => {
                   <Dialog.ActionTrigger asChild>
                     <Button
                       type="button"
-                      colorPalette="orange"
                       onClick={saveConfirmedEmail}
                       loading={loading}
                     >

@@ -22,3 +22,7 @@ export function getAuthParams(): {
     type: searchParams.get("type") ?? hashParams.get("type"),
   };
 }
+
+export function getEmailRedirectUrl(): string {
+  return `${window.location.origin}/#`;
+}

@@ -60,7 +60,6 @@ export const TaskBox = ({ task, refreshTasks }: TaskBoxProps) => {
       <HStack w="full">
         <Checkbox.Root
           checked={task.completed}
-          colorPalette="orange"
           onChange={() =>
             changeTaskValue({ ...task, completed: !task.completed })
           }
