@@ -1,7 +1,7 @@
 import { Drawer, Icon, Portal, useDisclosure } from "@chakra-ui/react";
-import { MenuItems } from "./MenuItems";
 import { IoMenu } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
+import { MenuItems } from "./MenuItems";
 
 export const MobileMenu = () => {
   const { open, onToggle } = useDisclosure();

@@ -4,17 +4,20 @@ import type { UserInfo } from "@/User.context";
 import { Button, Heading, Separator, Stack, Text } from "@chakra-ui/react";
 import { NameForm } from "./NameForm";
 import { ChangePassword } from "./ChangePassword";
+import { ChangeEmail } from "./ChangeEmail";
 
 interface ProfilePageProps {
   user: UserInfo;
   profile: ProfileInfo;
   getProfileInfo: () => Promise<void>;
+  getUserInfo: () => Promise<void>;
 }
 
 export const ProfilePage = ({
   user,
   profile,
   getProfileInfo,
+  getUserInfo,
 }: ProfilePageProps) => {
   return (
     <Stack gap={6} maxW="600px" mx="auto">
@@ -22,10 +25,12 @@ export const ProfilePage = ({
       <Text>
         <strong>Email:</strong> {user.email}
       </Text>
+      <ChangeEmail getUserInfo={getUserInfo} />
+      <Separator marginY={4} />
       <NameForm profile={profile} getProfileInfo={getProfileInfo} />
-      <Separator />
+      <Separator marginY={4} />
       <ChangePassword />
-      <Separator />
+      <Separator marginY={4} />
       <Button
         onClick={() => supabase.auth.signOut()}
         colorPalette="orange"

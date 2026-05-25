@@ -2,34 +2,47 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { Button, Field, Heading, Input, Link, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { handleLogin } from "./server";
 import { Message } from "@/components/Message";
 import { Link as ReactLink } from "react-router-dom";
 import { routes } from "@/routes";
-import { FaRegFaceSmileWink } from "react-icons/fa6";
+import { FaHeart } from "react-icons/fa";
+import { createUser } from "./server";
 
-type LoginForm = {
+type SignupForm = {
   email: string;
   password: string;
+  name: string;
 };
 
-export const LoginPage = () => {
+export const SignupPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isDirty },
-  } = useForm<LoginForm>();
+  } = useForm<SignupForm>();
   const [visible, setVisible] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [message, setMessage] = useState<{
+    type: "error" | "success";
+    text: string;
+  } | null>(null);
 
-  const submitLogin = (data: LoginForm) => {
+  const submitSignup = (data: SignupForm) => {
     return new Promise<void>((resolve) => {
-      handleLogin(data.email, data.password).then((res) => {
+      setMessage(null);
+      createUser({
+        email: data.email,
+        password: data.password,
+        name: data.name,
+      }).then((res) => {
         if (res.type === "ERROR") {
-          setErrorMessage(res.message);
+          setMessage({ type: "error", text: res.message });
           resolve();
           return;
         }
+        setMessage({
+          type: "success",
+          text: "Check your email for a confirmation link to complete your signup.",
+        });
         resolve();
         return;
       });
@@ -38,8 +51,21 @@ export const LoginPage = () => {
 
   return (
     <VStack gap={6} align="stretch" maxW="md" mx="auto" mt={10} asChild>
-      <form onSubmit={handleSubmit(submitLogin)}>
-        <Heading>Log in</Heading>
+      <form onSubmit={handleSubmit(submitSignup)}>
+        <Heading>Sign up</Heading>
+        <Field.Root invalid={!!errors.name}>
+          <Field.Label>Name</Field.Label>
+          <Input
+            type="text"
+            autoComplete="name"
+            {...register("name", { required: true })}
+          />
+          <Field.ErrorText width="full">
+            <Field.ErrorIcon />
+            {errors.name?.message || "This field is required"}
+          </Field.ErrorText>
+        </Field.Root>
+
         <Field.Root invalid={!!errors.email}>
           <Field.Label>Email</Field.Label>
           <Input
@@ -66,7 +92,13 @@ export const LoginPage = () => {
             visible={visible}
             onVisibleChange={setVisible}
             autoComplete="current-password"
-            {...register("password", { required: true })}
+            {...register("password", {
+              required: true,
+              minLength: {
+                value: 8,
+                message: "Password must be at least 8 characters",
+              },
+            })}
           />
           <Field.ErrorText width="full">
             <Field.ErrorIcon />
@@ -74,7 +106,7 @@ export const LoginPage = () => {
           </Field.ErrorText>
         </Field.Root>
 
-        {errorMessage && <Message type="error">{errorMessage}</Message>}
+        {message && <Message type={message.type}>{message.text}</Message>}
 
         <Button
           type="submit"
@@ -82,11 +114,11 @@ export const LoginPage = () => {
           loading={isSubmitting}
           colorPalette="orange"
         >
-          Log in
+          Sign up
         </Button>
         <Link colorPalette="orange" marginTop="4" asChild>
-          <ReactLink to={routes.SIGNUP}>
-            Don't have an account? Sign up <FaRegFaceSmileWink />
+          <ReactLink to={routes.LOGIN}>
+            Already have an account? Log in <FaHeart />
           </ReactLink>
         </Link>
       </form>

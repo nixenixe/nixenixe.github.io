@@ -14,8 +14,8 @@ export const ChangePassword = () => {
     handleSubmit,
     reset,
     getValues,
-    formState: { errors },
-  } = useForm<ChangePasswordForm>();
+    formState: { errors, isDirty, isSubmitting },
+  } = useForm<ChangePasswordForm>({defaultValues: { newPassword: "", confirmNewPassword: "" }});
   const newPasswordValue = getValues("newPassword");
 
   const onSubmit = (data: ChangePasswordForm) => {
@@ -39,10 +39,8 @@ export const ChangePassword = () => {
     });
   };
 
-  console.log(errors);
-
   return (
-    <VStack gap={4} w="full" asChild alignItems="start">
+    <VStack gap={6} w="full" asChild alignItems="start">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Heading size="md">Change password</Heading>
         <Field.Root invalid={!!errors.newPassword}>
@@ -73,7 +71,12 @@ export const ChangePassword = () => {
             {errors.confirmNewPassword?.message || "This field is required"}
           </Field.ErrorText>
         </Field.Root>
-        <Button type="submit" colorPalette="orange">
+        <Button
+          type="submit"
+          colorPalette="orange"
+          loading={isSubmitting}
+          disabled={!isDirty}
+        >
           Change password
         </Button>
       </form>

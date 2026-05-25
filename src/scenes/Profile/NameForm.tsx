@@ -17,7 +17,7 @@ export const NameForm = ({ profile, getProfileInfo }: NameFormProps) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isDirty },
   } = useForm<ProfileForm>({ defaultValues: { name: profile.name ?? "" } });
 
   const onSubmit = (data: ProfileForm) => {
@@ -39,7 +39,7 @@ export const NameForm = ({ profile, getProfileInfo }: NameFormProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Group attached w="full" alignItems="end" marginTop="4">
+      <Group attached w="full" alignItems="end">
         <Field.Root invalid={!!errors.name}>
           <Field.Label>Name</Field.Label>
           <Input {...register("name", { required: true })} />
@@ -53,6 +53,7 @@ export const NameForm = ({ profile, getProfileInfo }: NameFormProps) => {
           marginTop="4"
           loading={isSubmitting}
           colorPalette="orange"
+          disabled={!isDirty}
         >
           Save
         </Button>

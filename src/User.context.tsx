@@ -10,6 +10,7 @@ export interface UserContextType {
   user: UserInfo | null | "ERROR";
   profile: ProfileInfo | null | "ERROR";
   getProfileInfo: () => Promise<void>;
+  getUserInfo: () => Promise<void>;
 }
 
 export const UserProvider: React.FC<{
@@ -17,11 +18,13 @@ export const UserProvider: React.FC<{
   user: UserInfo | null | "ERROR";
   profile: ProfileInfo | null | "ERROR";
   getProfileInfo: () => Promise<void>;
-}> = ({ children, user, profile, getProfileInfo }) => {
+  getUserInfo: () => Promise<void>;
+}> = ({ children, user, profile, getProfileInfo, getUserInfo }) => {
   const value: UserContextType = {
     user,
     profile,
     getProfileInfo,
+    getUserInfo,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

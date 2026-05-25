@@ -1,22 +1,14 @@
-import { Route, Routes } from "react-router-dom";
-
-import { routes } from "./routes";
-import { Menu } from "./components/Menu";
+import { Menu } from "./components/Menu/Menu";
 import { Box } from "@chakra-ui/react";
-import { VacationPage } from "./scenes/Vacation/VacationPage";
-
 import { useEffect, useState } from "react";
-
 import { UserProvider, type UserInfo } from "./User.context";
 import { supabase } from "./supabaseClient";
-import { LoginPage } from "./scenes/Login/LoginPage";
-import { Todo } from "./scenes/Todo";
 import { FullPageSpinner } from "./components/FullPageSpinner";
 import { Message } from "./components/Message";
 import { Toaster } from "./components/ui/toaster";
 import type { FetchResult, ProfileInfo } from "./types";
 import { getProfile } from "./server";
-import { Profile } from "./scenes/Profile";
+import { Router } from "./Router";
 
 function App() {
   const [user, setUser] = useState<FetchResult<UserInfo> | null>(null);
@@ -60,6 +52,14 @@ function App() {
     setProfile(profileResult);
   };
 
+  const getUserInfo = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    setUser(user ? { id: user.id, email: user.email ?? "" } : null);
+  };
+
   const getContent = () => {
     if (authLoading) {
       return <FullPageSpinner />;
@@ -69,21 +69,16 @@ function App() {
       return <Message type="error">Could't get user information</Message>;
     }
 
-    if (!user) {
-      return <LoginPage />;
-    }
-
-    return (
-      <Routes>
-        <Route path={routes.HOME} element={<Todo />} />
-        <Route path={routes.PROFILE} element={<Profile />} />
-        <Route path={routes.VACATION} element={<VacationPage />} />
-      </Routes>
-    );
+    return <Router />;
   };
 
   return (
-    <UserProvider user={user} profile={profile} getProfileInfo={getProfileInfo}>
+    <UserProvider
+      user={user}
+      profile={profile}
+      getProfileInfo={getProfileInfo}
+      getUserInfo={getUserInfo}
+    >
       <Toaster />
       <Menu isLoggedIn={!!user} />
       <Box padding={{ base: "4", md: "6" }} maxW="1920px" mx="auto" w="full">

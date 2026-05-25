@@ -27,7 +27,10 @@ export const ProfileIconPopover = () => {
     return null;
   }
 
-  const profile = userContext.profile && userContext.profile !== "ERROR" ? userContext.profile : null;
+  const profile =
+    userContext.profile && userContext.profile !== "ERROR"
+      ? userContext.profile
+      : null;
 
   return (
     <Popover.Root positioning={{ placement: "bottom-end" }} size="xs">
@@ -46,38 +49,44 @@ export const ProfileIconPopover = () => {
               <Stack gap={0}>
                 <div>
                   <Text fontWeight="bold" fontSize="sm">
-                    {profile && profile.name ? `Hi, ${profile.name}!` : "Account:"}
+                    {profile && profile.name
+                      ? `Hi, ${profile.name}!`
+                      : "Account:"}
                   </Text>
                   <Text fontSize="sm">{userContext.user.email}</Text>
                 </div>
-                <Separator marginY={2} />
-                <Button
-                  as={Link}
-                  variant="ghost"
-                  justifyContent="start"
-                  paddingInline={2}
-                  size="xs"
-                  colorPalette="orange"
-                  asChild
-                >
-                  <ReactLink to="/profile">
-                    <HStack>
-                      <Icon asChild>
-                        <IoMdSettings />
-                      </Icon>
-                      <Text fontSize="sm">Settings</Text>
-                    </HStack>
-                  </ReactLink>
-                </Button>
-                <Separator marginY={2} />
-                <Button
-                  onClick={() => supabase.auth.signOut()}
-                  size="xs"
-                  colorPalette="orange"
-                  variant="subtle"
-                >
-                  Log out
-                </Button>
+                <Separator marginTop={4} marginBottom={2} />
+                <Popover.Trigger asChild>
+                  <Button
+                    as={Link}
+                    variant="ghost"
+                    justifyContent="start"
+                    paddingInline={2}
+                    size="xs"
+                    colorPalette="orange"
+                    asChild
+                  >
+                    <ReactLink to="/profile">
+                      <HStack>
+                        <Icon asChild>
+                          <IoMdSettings />
+                        </Icon>
+                        <Text fontSize="sm">Settings</Text>
+                      </HStack>
+                    </ReactLink>
+                  </Button>
+                </Popover.Trigger>
+                <Separator marginTop={2} marginBottom={4} />
+                <Popover.Trigger asChild>
+                  <Button
+                    onClick={() => supabase.auth.signOut()}
+                    size="xs"
+                    colorPalette="orange"
+                    variant="subtle"
+                  >
+                    Log out
+                  </Button>
+                </Popover.Trigger>
               </Stack>
             </Popover.Body>
           </Popover.Content>

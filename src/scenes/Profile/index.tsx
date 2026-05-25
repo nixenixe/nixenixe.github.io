@@ -28,6 +28,7 @@ export const Profile = () => {
       user={userContext.user}
       profile={userContext.profile}
       getProfileInfo={userContext.getProfileInfo}
+      getUserInfo={userContext.getUserInfo}
     />
   );
 };

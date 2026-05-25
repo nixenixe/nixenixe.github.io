@@ -1,5 +1,5 @@
 import { Box, Flex } from "@chakra-ui/react";
-import { HomeLogoLink } from "./Logo";
+import { HomeLogoLink } from "../Logo";
 import { MobileMenu } from "./MobileMenu";
 import { MenuItems } from "./MenuItems";
 import { ProfileIconPopover } from "./ProfileIconPopover";
