@@ -37,7 +37,13 @@ export const SignupPage = () => {
         name: data.name,
       }).then((res) => {
         if (res.type === "ERROR") {
-          setMessage({ type: "error", text: res.message });
+          setMessage({
+            type: "error",
+            text:
+              res.code === "over_email_send_rate_limit"
+                ? "Too many signup requests. Please wait a while before trying again."
+                : "Couldn't create account. Please try again later.",
+          });
           resolve();
           return;
         }

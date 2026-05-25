@@ -1,9 +1,12 @@
-import { Button, Field, Heading, Input } from "@chakra-ui/react";
+import { Button, Field, Heading, Input, Link } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { sendPasswordResetEmail } from "./server";
 import { NarrowCenteredPage } from "@/components/NarrowCenteredPage";
 import { useState } from "react";
 import { Message } from "@/components/Message";
+import { IoIosArrowRoundBack } from "react-icons/io";
+import { Link as ReactLink } from "react-router-dom";
+import { routes } from "@/routes";
 
 type ForgotPasswordFormValues = {
   email: string;
@@ -48,6 +51,11 @@ export const ForgotPasswordPage = () => {
   return (
     <NarrowCenteredPage asChild>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <Link asChild>
+          <ReactLink to={routes.LOGIN}>
+            <IoIosArrowRoundBack /> Back to login
+          </ReactLink>
+        </Link>
         <Heading>Forgot your password?</Heading>
         <Field.Root invalid={!!errors.email}>
           <Field.Label>Your email</Field.Label>
