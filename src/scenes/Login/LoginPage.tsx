@@ -4,7 +4,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { handleLogin } from "./server";
 import { Message } from "@/components/Message";
-import { Link as ReactLink, useNavigate } from "react-router-dom";
+import {
+  Link as ReactLink,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { routes } from "@/routes";
 import { FaRegFaceSmileWink } from "react-icons/fa6";
 import { NarrowCenteredPage } from "@/components/NarrowCenteredPage";
@@ -15,6 +19,8 @@ type LoginForm = {
 };
 
 export const LoginPage = () => {
+  const [searchParams] = useSearchParams();
+  const fromResetPassword = searchParams.get("password_reset") === "success";
   const navigate = useNavigate();
   const {
     register,
@@ -45,6 +51,12 @@ export const LoginPage = () => {
 
   return (
     <NarrowCenteredPage>
+      {fromResetPassword && (
+        <Message type="success">
+          Your password has been reset successfully. Please log in with your new
+          password.
+        </Message>
+      )}
       <VStack gap={6} asChild alignItems="start">
         <form onSubmit={handleSubmit(submitLogin)}>
           <Heading>Log in</Heading>

@@ -36,7 +36,7 @@ export const ProfileIconPopover = () => {
     <Popover.Root positioning={{ placement: "bottom-end" }} size="xs">
       <Popover.Trigger asChild>
         <button style={{ cursor: "pointer", marginLeft: "auto" }}>
-          <Icon asChild color="fg">
+          <Icon asChild>
             <FaCircleUser size={30} />
           </Icon>
         </button>

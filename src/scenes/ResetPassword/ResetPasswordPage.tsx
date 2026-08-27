@@ -29,7 +29,7 @@ export const ResetPasswordPage = () => {
         }
         resolve();
         reset();
-        navigate(`${routes.LOGIN}?passwordReset=success`, { replace: true });
+        navigate(`${routes.LOGIN}?password_reset=success`, { replace: true });
       });
     });
   }

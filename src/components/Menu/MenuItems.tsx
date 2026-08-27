@@ -7,7 +7,7 @@ interface MenuItemsProps {
 }
 
 const menuItems = [
-  { label: "Todo", path: routes.HOME },
+  { label: "To-do", path: routes.HOME },
   { label: "Vacation", path: routes.VACATION },
 ];
 

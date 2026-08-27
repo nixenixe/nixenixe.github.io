@@ -5,53 +5,39 @@ import {
   Dialog,
   HStack,
   Input,
-  parseDate,
   Portal,
   RadioCard,
   VStack,
-  type DateValue,
 } from "@chakra-ui/react";
-import type { Vacation, VacationType } from "./types";
-import { useState } from "react";
-import moment from "moment";
+
 import { LuCalendar } from "react-icons/lu";
+import type { TimeOffEntry, TimeOffType } from "./types";
+import { useForm } from "react-hook-form";
+
+type TimeOffForm = {
+  type: TimeOffType;
+  title: string;
+  start_date: string;
+  end_date: string;
+  start_time?: string;
+  end_time?: string;
+};
 
 interface VacationDialogProps {
   buttonContent: React.ReactNode;
-  vacationData: Vacation | null;
-  saveVacation: (vacation: Vacation) => void;
+  vacationData: TimeOffEntry | null;
+  saveVacation: (vacation: TimeOffEntry) => void;
 }
 
 export const VacationDialog = (props: VacationDialogProps) => {
-  const { vacationData, saveVacation, buttonContent } = props;
-  const [type, setType] = useState<VacationType>(
-    vacationData?.type || "VACATION",
-  );
-  const [label, setLabel] = useState<string>(vacationData?.label || "");
-  const [date, setDate] = useState<DateValue[] | undefined>(
-    vacationData
-      ? [parseDate(vacationData.startDate), parseDate(vacationData.endDate)]
-      : undefined,
-  );
-  const [startTime, setStartTime] = useState<string>(
-    vacationData ? moment(vacationData.startDate).format("HH:mm") : "",
-  );
-  const [endTime, setEndTime] = useState<string>(
-    vacationData ? moment(vacationData.endDate).format("HH:mm") : "",
-  );
+  const { buttonContent } = props;
+  const { register, setValue, getValues } = useForm<TimeOffForm>();
+
+  console.log(getValues("type"));
 
   const onSave = () => {
-    const newVacation: Vacation = {
-      id: vacationData?.id || crypto.randomUUID(),
-      type,
-      label,
-      startDate: moment(`${date?.[0]?.toString().split("T")[0]}T${startTime}`).toISOString(),
-      endDate: moment(`${date?.[1]?.toString().split("T")[0]}T${endTime}`).toISOString(),
-    };
-    saveVacation(newVacation);
+    console.log("save");
   };
-
-  console.log({ type, label, date, startTime, endTime });
 
   return (
     <Dialog.Root placement="center" motionPreset="slide-in-bottom" size="lg">
@@ -68,18 +54,13 @@ export const VacationDialog = (props: VacationDialogProps) => {
             <Dialog.Body>
               <VStack gap="6">
                 <Input
-                  placeholder="Label"
-                  value={label}
-                  onChange={(e) => setLabel(e.target.value)}
+                  placeholder="Title"
+                  {...register("title", { required: true })}
                 />
                 <RadioCard.Root
                   size="sm"
-                  defaultValue="VACATION"
-                  value={type}
                   w="full"
-                  onValueChange={(value) =>
-                    setType(value.value as VacationType)
-                  }
+                  {...register("type", { required: true })}
                 >
                   <RadioCard.Label></RadioCard.Label>
                   <HStack align="stretch">
@@ -110,10 +91,14 @@ export const VacationDialog = (props: VacationDialogProps) => {
                 </RadioCard.Root>
                 <DatePicker.Root
                   selectionMode="range"
-                  value={date}
-                  onValueChange={(e) => setDate(e.value)}
                   locale="no-NO"
                   startOfWeek={1}
+                  onValueChange={(value) => {
+                    setValue("start_date", value.valueAsString[0] || "");
+                    setValue("end_date", value.valueAsString[1] || "");
+                  }}
+                  fixedWeeks
+                  openOnClick
                 >
                   <DatePicker.Label>Select range</DatePicker.Label>
                   <DatePicker.Control>
@@ -144,24 +129,22 @@ export const VacationDialog = (props: VacationDialogProps) => {
                     </DatePicker.Positioner>
                   </Portal>
                 </DatePicker.Root>
-                {type === "TO_HOURS" && (
+                {/*getValues("type") === "TIMEOFF_HOURS" && (
                   <HStack gap="2" w="full">
                     <Input
                       placeholder="Start time"
                       type="time"
-                      value={startTime}
-                      onChange={(e) => setStartTime(e.target.value)}
+                      {...register("start_time")}
                       step="600"
                     />
                     <Input
                       placeholder="End time"
                       type="time"
-                      value={endTime}
-                      onChange={(e) => setEndTime(e.target.value)}
+                      {...register("end_time")}
                       step="600"
                     />
                   </HStack>
-                )}
+                )*/}
               </VStack>
             </Dialog.Body>
             <Dialog.Footer>

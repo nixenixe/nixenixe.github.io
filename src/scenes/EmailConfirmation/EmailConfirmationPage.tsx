@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/supabaseClient";
 import { FullPageSpinner } from "@/components/FullPageSpinner";
 import { NarrowCenteredPage } from "@/components/NarrowCenteredPage";
+import { toaster } from "@/components/ui/toaster";
 
 export function EmailConfirmationPage() {
   const [loading, setLoading] = useState(true);
@@ -23,6 +24,10 @@ export function EmailConfirmationPage() {
       } = await supabase.auth.getSession();
 
       if (session) {
+        toaster.create({
+          description: "Your email was successfully confirmed.",
+          type: "success",
+        });
         navigate(routes.HOME, { replace: true });
         return;
       }
