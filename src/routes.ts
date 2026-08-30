@@ -8,4 +8,10 @@ export const routes = {
   SIGNUP_SUCCESS: "/signup-success",
   FORGOT_PASSWORD: "/forgot-password",
   RESET_PASSWORD: "/reset-password",
+  JAVAZONE: {
+    ROOT: "/javazone/*",
+    PROGRAM: "/javazone/program",
+    FAVORITES: "/javazone/favorites",
+    CALENDAR: "/javazone/calendar",
+  },
 };

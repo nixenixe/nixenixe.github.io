@@ -3,7 +3,11 @@ import { IoMenu } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
 import { MenuItems } from "./MenuItems";
 
-export const MobileMenu = () => {
+interface MobileMenuProps {
+  isLoggedIn: boolean;
+}
+
+export const MobileMenu = ({ isLoggedIn }: MobileMenuProps) => {
   const { open, onToggle } = useDisclosure();
   const IconTag = open ? IoClose : IoMenu;
   return (
@@ -25,7 +29,7 @@ export const MobileMenu = () => {
         <Drawer.Positioner marginTop="54px">
           <Drawer.Content bg="orange.emphasized" shadow="none">
             <Drawer.Body>
-              <MenuItems isMobile />
+              <MenuItems isMobile isLoggedIn={isLoggedIn} />
             </Drawer.Body>
           </Drawer.Content>
         </Drawer.Positioner>

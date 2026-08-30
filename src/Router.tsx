@@ -10,10 +10,15 @@ import { LoginPage } from "./scenes/Login/LoginPage";
 import { SignupSuccess } from "./scenes/Signup/SignupSuccess";
 import { ForgotPasswordPage } from "./scenes/ResetPassword/ForgotPasswordPage";
 import { ResetPasswordPage } from "./scenes/ResetPassword/ResetPasswordPage";
+import { JavaZone } from "./scenes/JavaZone";
 
 export const Router = () => {
   return (
     <Routes>
+      <Route
+        path={routes.JAVAZONE.ROOT}
+        element={<JavaZone />}
+      />
       <Route path={routes.LOGIN} element={<LoginPage />} />
       <Route path={routes.SIGNUP} element={<SignupPage />} />
       <Route path={routes.SIGNUP_SUCCESS} element={<SignupSuccess />} />

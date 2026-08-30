@@ -28,7 +28,7 @@ export const Menu = ({ isLoggedIn }: MenuProps) => {
       {/* Desktop Menu */}
       {isLoggedIn && (
         <Box display={{ base: "none", md: "block" }}>
-          <MenuItems />
+          <MenuItems isLoggedIn={isLoggedIn} />
         </Box>
       )}
 
@@ -37,7 +37,7 @@ export const Menu = ({ isLoggedIn }: MenuProps) => {
       {/* Mobile Drawer */}
       {isLoggedIn && (
         <Box display={{ base: "block", md: "none" }}>
-          <MobileMenu />
+          <MobileMenu isLoggedIn={isLoggedIn} />
         </Box>
       )}
     </Flex>
