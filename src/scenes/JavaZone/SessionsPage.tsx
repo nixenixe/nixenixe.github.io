@@ -46,6 +46,7 @@ export const SessionsPage = ({ sessions }: SessionsPageProps) => {
                                 paddingTop="2"
                                 shadow="md"
                                 textAlign="start"
+                                cursor="pointer"
                             >
                                 <SessionBox session={session} />
                             </Box>
