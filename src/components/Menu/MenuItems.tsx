@@ -5,6 +5,7 @@ import { Link as ReactLink } from "react-router-dom";
 interface MenuItemsProps {
   isMobile?: boolean;
   isLoggedIn: boolean;
+  toggleMobileMenu?: () => void;
 }
 
 const menuItems = [
@@ -13,7 +14,7 @@ const menuItems = [
   { label: "JavaZone", path: routes.JAVAZONE.PROGRAM, public: true },
 ];
 
-export const MenuItems = ({ isMobile = false, isLoggedIn }: MenuItemsProps) => {
+export const MenuItems = ({ isMobile = false, isLoggedIn, toggleMobileMenu }: MenuItemsProps) => {
   const Tag = isMobile ? VStack : HStack;
 
   const getMenuItems = () => {
@@ -31,7 +32,16 @@ export const MenuItems = ({ isMobile = false, isLoggedIn }: MenuItemsProps) => {
           fontSize={isMobile ? "2xl" : "md"}
           padding={isMobile ? "4" : "2"}
         >
-          <ReactLink to={item.path}>{item.label}</ReactLink>
+          <ReactLink
+            to={item.path}
+            onClick={() => {
+              if (isMobile) {
+                toggleMobileMenu?.();
+              }
+            }}
+          >
+            {item.label}
+          </ReactLink>
         </Link>
       ))}
     </Tag>

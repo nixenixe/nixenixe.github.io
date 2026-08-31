@@ -29,7 +29,7 @@ export const MobileMenu = ({ isLoggedIn }: MobileMenuProps) => {
         <Drawer.Positioner marginTop="54px">
           <Drawer.Content bg="orange.emphasized" shadow="none">
             <Drawer.Body>
-              <MenuItems isMobile isLoggedIn={isLoggedIn} />
+              <MenuItems isMobile isLoggedIn={isLoggedIn} toggleMobileMenu={onToggle} />
             </Drawer.Body>
           </Drawer.Content>
         </Drawer.Positioner>
