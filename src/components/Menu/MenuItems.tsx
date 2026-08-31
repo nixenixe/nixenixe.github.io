@@ -7,14 +7,11 @@ interface MenuItemsProps {
   isLoggedIn: boolean;
 }
 
-
-
 const menuItems = [
   { label: "To-do", path: routes.HOME },
   { label: "Vacation", path: routes.VACATION },
   { label: "JavaZone", path: routes.JAVAZONE.PROGRAM, public: true },
 ];
-
 
 export const MenuItems = ({ isMobile = false, isLoggedIn }: MenuItemsProps) => {
   const Tag = isMobile ? VStack : HStack;

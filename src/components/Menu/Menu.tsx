@@ -26,20 +26,17 @@ export const Menu = ({ isLoggedIn }: MenuProps) => {
       <HomeLogoLink />
 
       {/* Desktop Menu */}
-      {isLoggedIn && (
-        <Box display={{ base: "none", md: "block" }}>
-          <MenuItems isLoggedIn={isLoggedIn} />
-        </Box>
-      )}
+      <Box display={{ base: "none", md: "block" }}>
+        <MenuItems isLoggedIn={isLoggedIn} />
+      </Box>
 
       <ProfileIconPopover />
 
       {/* Mobile Drawer */}
-      {isLoggedIn && (
-        <Box display={{ base: "block", md: "none" }}>
-          <MobileMenu isLoggedIn={isLoggedIn} />
-        </Box>
-      )}
+
+      <Box display={{ base: "block", md: "none" }}>
+        <MobileMenu isLoggedIn={isLoggedIn} />
+      </Box>
     </Flex>
   );
 };

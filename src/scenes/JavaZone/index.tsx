@@ -9,8 +9,6 @@ import { JavaZonePage } from './JavaZonePage';
 export const JavaZone = () => {
     const [sessions, setSessions] = useState<FetchResult<Session[]> | null>(null);
 
-    console.log(sessions);
-
     useEffect(() => {
         fetchProgram().then(setSessions);
     }, []);
@@ -24,6 +22,6 @@ export const JavaZone = () => {
     }
 
     return (
-        <JavaZonePage />
+        <JavaZonePage sessions={sessions} />
     );
 };

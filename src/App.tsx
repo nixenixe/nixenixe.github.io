@@ -81,7 +81,7 @@ function App() {
     >
       <Toaster />
       <Menu isLoggedIn={!!user} />
-      <Box padding={{ base: "4", md: "6" }} maxW="1920px" mx="auto" w="full">
+      <Box padding={{ base: "4", md: "6" }} maxW="1920px" mx="auto" w="full" height="100%" display="flex" flexDirection="column">
         {getContent()}
       </Box>
       <Box

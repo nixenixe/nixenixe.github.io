@@ -16,5 +16,5 @@ export async function fetchProgram(): Promise<FetchResult<Session[]>> {
         console.log('Unexpected response shape')
         return "ERROR";
     }
-    return data.sessions.filter((s) => s.title);
+    return data.sessions.filter((s) => s.title && s.format !== "workshop");
 }
