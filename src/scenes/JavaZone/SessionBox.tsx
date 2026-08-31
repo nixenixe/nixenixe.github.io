@@ -19,7 +19,10 @@ export const SessionBox = ({ session }: SessionBoxProps) => {
                     aria-label="Add to favorites"
                     size="sm"
                     variant="ghost"
-                    onClick={() => context.toggleFavorite(session.id)}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        context.toggleFavorite(session.id);
+                    }}
                 >
                     {context.isFavorite(session.id) ? <IoIosHeart /> : <IoIosHeartEmpty />}
                 </IconButton>
