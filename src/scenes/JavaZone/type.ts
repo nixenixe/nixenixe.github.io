@@ -28,3 +28,10 @@ export interface Session {
   startSlotZulu?: string
   video?: string
 }
+
+export type FavoriteTalk = {
+  id: string;
+  user_id: string;
+  event_id: string;
+  created_at: string;
+};

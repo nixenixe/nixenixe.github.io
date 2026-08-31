@@ -1,3 +1,5 @@
+import type { FetchResult } from "@/types";
+import { addFavoriteTalk, removeFavoriteTalk, getFavoriteTalkIds } from "./server";
 import type { Session } from "./type";
 
 export function getSessionStart(session: Session): Date | null {
@@ -56,23 +58,42 @@ export const getDay = (date: Date | null): string | null => {
     return date.getDay() === 3 ? "Wednesday" : date.getDay() === 4 ? "Thursday" : null;
 };
 
-export const saveFavorite = (sessionId: string) => {
+export const saveFavorite = async (sessionId: string, isLoggedIn: boolean): Promise<"SUCCESS" | "ERROR"> => {
+    if (isLoggedIn) {
+        const result = await addFavoriteTalk(sessionId);
+        return result;
+    }
     const favorites = JSON.parse(localStorage.getItem("favorites") ?? "[]") as string[];
     if (!favorites.includes(sessionId)) {
         favorites.push(sessionId);
         localStorage.setItem("favorites", JSON.stringify(favorites));
     }
+    return "SUCCESS";
 };
 
-export const removeFavorite = (sessionId: string) => {
+export const removeFavorite = async (sessionId: string, isLoggedIn: boolean): Promise<"SUCCESS" | "ERROR"> => {
+    if (isLoggedIn) {
+        const result = await removeFavoriteTalk(sessionId);
+        return result;
+    }
     const favorites = JSON.parse(localStorage.getItem("favorites") ?? "[]") as string[];
     const index = favorites.indexOf(sessionId);
     if (index !== -1) {
         favorites.splice(index, 1);
         localStorage.setItem("favorites", JSON.stringify(favorites));
     }
+    return "SUCCESS";
 };
 
-export const getFavorites = (): string[] => {
+export const getFavorites = async (isLoggedIn: boolean): Promise<FetchResult<string>[] | "ERROR"> => {
+    if (isLoggedIn) {
+        const result = await getFavoriteTalkIds();
+        return result;
+    }
     return JSON.parse(localStorage.getItem("favorites") ?? "[]") as string[];
+};
+
+export const capitalize = (str: string): string => {
+    if (!str || str.length === 0) return "";
+    return str.at(0)?.toUpperCase() + str.slice(1);
 };

@@ -1,6 +1,6 @@
 import type { Session } from "./type";
-import { formatTime, getSessionStart } from "./utils";
-import { HStack, IconButton, Text, VStack } from "@chakra-ui/react";
+import { capitalize, formatTime, getSessionStart } from "./utils";
+import { HStack, IconButton, Tag, Text, VStack } from "@chakra-ui/react";
 import { IoIosHeartEmpty, IoIosHeart } from "react-icons/io";
 import { useContext } from "react";
 import { JavaZoneContext } from "./JavaZoneContext";
@@ -11,6 +11,9 @@ interface SessionBoxProps {
 
 export const SessionBox = ({ session }: SessionBoxProps) => {
     const context = useContext(JavaZoneContext);
+
+    const keywords = [... new Set(session.suggestedKeywords.split(/[\s,]+/).filter((keyword) => keyword.trim().length > 0))];
+
     return (
         <VStack width="100%" height="100%" align="stretch">
             <HStack align="center" justify="space-between" width="100%">
@@ -27,7 +30,14 @@ export const SessionBox = ({ session }: SessionBoxProps) => {
                     {context.isFavorite(session.id) ? <IoIosHeart /> : <IoIosHeartEmpty />}
                 </IconButton>
             </HStack>
-            <Text fontWeight="bold">{session.title}</Text>
+            <Text fontWeight="bold" height="100px">{session.title}</Text>
+            <HStack wrap="wrap">
+                {keywords.map((keyword: string) => (
+                    <Tag.Root key={session.id + "-" + keyword}>
+                        <Tag.Label>{capitalize(keyword)}</Tag.Label>
+                    </Tag.Root>
+                ))}
+            </HStack>
         </VStack>
     );
 };
