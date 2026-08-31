@@ -41,7 +41,7 @@ export async function addFavoriteTalk(eventId: string): Promise<"SUCCESS" | "ERR
     return "ERROR";
   }
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("favorite_talks")
     .insert({
       user_id: user.id,
