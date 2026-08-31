@@ -9,8 +9,8 @@ interface JavaZoneContextType {
 
 export const JavaZoneContext = createContext<JavaZoneContextType>({
     favorites: [] as string[],
-    toggleFavorite: (sessionId: string) => { },
-    isFavorite: (sessionId: string) => false
+    toggleFavorite: (_: string) => { },
+    isFavorite: (_: string) => false
 });
 
 export const JavaZoneContextProvider = ({ children }: { children: React.ReactNode }) => {
