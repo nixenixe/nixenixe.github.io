@@ -1,4 +1,5 @@
 import { VStack, Text, Tag, HStack } from "@chakra-ui/react";
+import { KeywordTags } from "./KeywordTags";
 import type { Session } from "./type";
 import { getDay } from "./utils";
 import { formatTime, getSessionEnd, getSessionStart } from "./utils";
@@ -39,13 +40,7 @@ export const SessionDialogContent = ({ session }: { session: Session }) => {
             </HStack>
             <Text>{session.abstract ?? ""}</Text>
             <Text><b>Speakers: </b>{session.speakers.map(speaker => speaker.name).join(", ")}</Text>
-            <HStack gap="2" wrap="wrap">
-                {session.suggestedKeywords.split(", ").map((keyword) => keyword.trim() !== "" && (
-                    <Tag.Root key={keyword} variant="outline">
-                        <Tag.Label>{keyword}</Tag.Label>
-                    </Tag.Root>
-                ))}
-            </HStack>
+            <KeywordTags suggestedKeywords={session.suggestedKeywords} id={session.id} />
         </VStack>
     );
 };
